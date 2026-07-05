@@ -32,22 +32,13 @@
     document.body.classList.remove('keyboard-navigation');
   });
 
-  // ---------- Progress bar & Navbar scroll class ----------
+  // ---------- Progress bar ----------
   const progress = $('#progress');
-  const navbarEl = $('nav');
   function onScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const p = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
     if (progress) progress.style.width = (p * 100) + '%';
-
-    if (navbarEl) {
-      if (scrollTop > 50) {
-        navbarEl.classList.add('nav-scrolled');
-      } else {
-        navbarEl.classList.remove('nav-scrolled');
-      }
-    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -214,7 +205,7 @@
           const nav = document.querySelector('nav');
           const navH = nav ? nav.getBoundingClientRect().height : 0;
           const cardsContainer = document.querySelector('.views-split');
-          const targetTop = cardsContainer 
+          const targetTop = cardsContainer
             ? cardsContainer.getBoundingClientRect().top + window.scrollY - navH - 24
             : viewsSection.getBoundingClientRect().top + window.scrollY - navH;
           window.scrollTo({ top: targetTop, behavior: 'smooth' });

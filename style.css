@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --deep: #15110c;
   --deep2: #0c0a07;
   --fog: #f2ece1;
@@ -57,29 +57,19 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.8rem 4rem;
+  padding: 1.5rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid transparent;
-  box-shadow: none;
-  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
-}
-
-nav.nav-scrolled {
-  background: rgba(12, 10, 7, 0.6);
+  background: rgba(12, 10, 7, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(201, 164, 99, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
-  padding: 1.1rem 4rem; /* Thu nhỏ chiều cao nhẹ khi cuộn để tăng tính cao cấp */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .nav-logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.05rem;
   letter-spacing: 0.28em;
   color: var(--mist);
@@ -88,7 +78,7 @@ nav.nav-scrolled {
 }
 
 .nav-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -326,7 +316,7 @@ nav.nav-scrolled {
 }
 
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(2.6rem, 7vw, 5.6rem);
   font-weight: 700;
   line-height: 1.05;
@@ -369,7 +359,7 @@ nav.nav-scrolled {
 }
 
 .video-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.9rem, 4vw, 3rem);
   font-weight: 700;
   color: var(--fog);
@@ -441,7 +431,7 @@ nav.nav-scrolled {
 }
 
 .hero-sub {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.15rem;
   font-style: italic;
   color: var(--mist);
@@ -506,7 +496,7 @@ nav.nav-scrolled {
 }
 
 .thesis-number {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(14rem, 30vw, 26rem);
   color: rgba(201, 164, 99, 0.045);
   position: absolute;
@@ -530,7 +520,7 @@ nav.nav-scrolled {
 }
 
 .thesis-body {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   font-weight: 300;
   line-height: 1.5;
@@ -555,7 +545,7 @@ nav.nav-scrolled {
 }
 
 .thesis-quote p {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-style: italic;
   font-size: 1.15rem;
   color: var(--mist);
@@ -722,7 +712,7 @@ nav.nav-scrolled {
 }
 
 .views-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   font-weight: 700;
   color: var(--fog);
@@ -814,7 +804,7 @@ nav.nav-scrolled {
 }
 
 .view-statement {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.15rem, 1.8vw, 1.5rem);
   font-style: italic;
   color: var(--fog);
@@ -887,7 +877,7 @@ nav.nav-scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.1rem;
   color: var(--gold);
   letter-spacing: 0.1em;
@@ -1021,7 +1011,7 @@ nav.nav-scrolled {
 }
 
 .analysis-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.6rem, 3vw, 2.3rem);
   font-weight: 700;
   color: var(--fog);
@@ -1079,7 +1069,7 @@ nav.nav-scrolled {
 }
 
 .detail-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 4rem;
   color: var(--gold);
   line-height: 1;
@@ -1087,7 +1077,7 @@ nav.nav-scrolled {
 }
 
 .detail-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: var(--fog);
@@ -1225,14 +1215,14 @@ nav.nav-scrolled {
 }
 
 .card-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 0.85rem;
   color: var(--mist);
   letter-spacing: 0.15em;
 }
 
 .card-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--fog);
@@ -1462,7 +1452,7 @@ nav.nav-scrolled {
 }
 
 .conclusion-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(2.1rem, 5vw, 4rem);
   font-weight: 700;
   color: var(--fog);
@@ -2010,7 +2000,7 @@ html {
 }
 
 .bento-main-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(2rem, 4vw, 3.2rem);
   color: var(--fog);
   line-height: 1.2;
@@ -2042,7 +2032,7 @@ html {
 
 
 .bento-card-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.4rem;
   color: var(--gold-bright);
   margin-bottom: 1rem;
@@ -2700,7 +2690,7 @@ html {
   overflow: hidden !important;
 }
 
-.view-panel > * {
+.view-panel>* {
   position: relative;
   z-index: 2;
 }
@@ -2725,24 +2715,24 @@ html {
     linear-gradient(135deg,
       rgba(12, 8, 5, 0.88) 0%,
       rgba(30, 15, 8, 0.75) 50%,
-      rgba(12, 8, 5, 0.82) 100%
-    ),
+      rgba(12, 8, 5, 0.82) 100%),
     url('panel_tbcn.jpg');
 }
 
 .view-panel.tbcn:hover::before {
-  transform: scale(1.15) translateY(12px); /* Chỉ thay đổi translateY để trượt xuống, scale giữ nguyên 1.15 */
+  transform: scale(1.15) translateY(12px);
+  /* Chỉ thay đổi translateY để trượt xuống, scale giữ nguyên 1.15 */
   background-image:
     linear-gradient(135deg,
       rgba(12, 8, 5, 0.75) 0%,
       rgba(30, 15, 8, 0.55) 50%,
-      rgba(12, 8, 5, 0.70) 100%
-    ),
+      rgba(12, 8, 5, 0.70) 100%),
     url('panel_tbcn.jpg');
 }
 
 .view-panel.tbcn.expanded::before {
-  opacity: 0 !important; /* Ẩn hoàn toàn ảnh nền khi hiện nội dung */
+  opacity: 0 !important;
+  /* Ẩn hoàn toàn ảnh nền khi hiện nội dung */
   transform: scale(1) translateY(0);
 }
 
@@ -2752,8 +2742,7 @@ html {
     linear-gradient(135deg,
       rgba(5, 10, 8, 0.88) 0%,
       rgba(8, 22, 14, 0.75) 50%,
-      rgba(5, 10, 8, 0.82) 100%
-    ),
+      rgba(5, 10, 8, 0.82) 100%),
     url('panel_xhcn.jpg');
 }
 
@@ -2763,12 +2752,12 @@ html {
     linear-gradient(135deg,
       rgba(5, 10, 8, 0.75) 0%,
       rgba(8, 22, 14, 0.55) 50%,
-      rgba(5, 10, 8, 0.70) 100%
-    ),
+      rgba(5, 10, 8, 0.70) 100%),
     url('panel_xhcn.jpg');
 }
 
 .view-panel.xhcn.expanded::before {
-  opacity: 0 !important; /* Ẩn hoàn toàn ảnh nền khi hiện nội dung */
+  opacity: 0 !important;
+  /* Ẩn hoàn toàn ảnh nền khi hiện nội dung */
   transform: scale(1) translateY(0);
 }
