@@ -32,13 +32,22 @@
     document.body.classList.remove('keyboard-navigation');
   });
 
-  // ---------- Progress bar ----------
+  // ---------- Progress bar & Navbar scroll class ----------
   const progress = $('#progress');
+  const navbarEl = $('nav');
   function onScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const p = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
     if (progress) progress.style.width = (p * 100) + '%';
+
+    if (navbarEl) {
+      if (scrollTop > 50) {
+        navbarEl.classList.add('nav-scrolled');
+      } else {
+        navbarEl.classList.remove('nav-scrolled');
+      }
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

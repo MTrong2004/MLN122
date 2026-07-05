@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --deep: #15110c;
   --deep2: #0c0a07;
   --fog: #f2ece1;
@@ -57,15 +57,25 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.5rem 4rem;
+  padding: 1.8rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(12, 10, 7, 0.45);
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+}
+
+nav.nav-scrolled {
+  background: rgba(12, 10, 7, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(201, 164, 99, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
+  padding: 1.1rem 4rem;
 }
 
 .nav-logo {
