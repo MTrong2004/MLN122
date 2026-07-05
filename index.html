@@ -1,169 +1,180 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <div class="preloader-content">
-    <div class="preloader-line">
-      <div class="preloader-progress" id="preloader-progress"></div>
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="preloader-line">
+        <div class="preloader-progress" id="preloader-progress"></div>
+      </div>
+      <div class="preloader-text">Loading... <span id="preloader-percent">0</span>%</div>
     </div>
-    <div class="preloader-text">Loading... <span id="preloader-percent">0</span>%</div>
   </div>
-</div>
 
-<div id="progress"></div>
-<div id="section-dots" aria-label="Điều hướng từng phần"></div>
+  <div id="progress"></div>
+  <div id="section-dots" aria-label="Điều hướng từng phần"></div>
 
-<nav>
-  <div class="nav-logo">KTTT · NOXH</div>
-  <div class="nav-tag">Kinh tế chính trị Mác – Lênin</div>
-</nav>
+  <nav>
+    <div class="nav-logo">KTTT · NOXH</div>
+    <div class="nav-title" id="nav-center-title"></div>
+    <div class="nav-tag">Kinh tế chính trị Mác – Lênin</div>
+  </nav>
 
-<!-- SCENE 1: HERO -->
-<section class="scene" id="scene-hero">
-  <div class="sky"></div>
-  <div class="stars"></div>
-  <div class="moon"></div>
-  <div class="atmos"></div>
-  <div class="atmos-2"></div>
-  <div id="motes"></div>
+  <!-- SCENE 1: HERO -->
+  <section class="scene" id="scene-hero">
 
-  <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- khu nhà ở xã hội: thấp, tối, ít cửa sổ sáng -->
-    <rect x="40" y="200" width="70" height="100" fill="#2a2318"/>
-    <rect x="120" y="180" width="60" height="120" fill="#241f16"/>
-    <rect x="190" y="215" width="55" height="85" fill="#2a2318"/>
-    <rect x="255" y="195" width="65" height="105" fill="#241f16"/>
-    <g fill="#4a4130" opacity="0.6">
-      <rect x="52" y="215" width="8" height="8"/><rect x="70" y="230" width="8" height="8"/>
-      <rect x="132" y="200" width="8" height="8"/><rect x="150" y="220" width="8" height="8"/>
-      <rect x="200" y="230" width="8" height="8"/><rect x="266" y="215" width="8" height="8"/>
-    </g>
-    <!-- trung tâm: cán cân đứng giữa, khoảng trống -->
-    <!-- khu chung cư cao cấp: cao, sáng đèn vàng -->
-    <rect x="760" y="120" width="70" height="180" fill="#3a2c18"/>
-    <rect x="840" y="70" width="80" height="230" fill="#3f3018"/>
-    <rect x="930" y="140" width="60" height="160" fill="#362919"/>
-    <rect x="1000" y="95" width="75" height="205" fill="#3f3018"/>
-    <rect x="1085" y="150" width="60" height="150" fill="#362919"/>
-    <g fill="#e8c98a">
-      <rect x="772" y="140" width="9" height="9"/><rect x="795" y="160" width="9" height="9"/><rect x="772" y="180" width="9" height="9"/>
-      <rect x="855" y="90" width="9" height="9"/><rect x="880" y="115" width="9" height="9"/><rect x="855" y="140" width="9" height="9"/><rect x="880" y="165" width="9" height="9"/>
-      <rect x="945" y="160" width="9" height="9"/><rect x="965" y="185" width="9" height="9"/>
-      <rect x="1015" y="115" width="9" height="9"/><rect x="1040" y="140" width="9" height="9"/><rect x="1015" y="165" width="9" height="9"/>
-      <rect x="1100" y="170" width="9" height="9"/><rect x="1122" y="195" width="9" height="9"/>
-    </g>
-    <rect x="0" y="298" width="1200" height="2" fill="#c9a463" opacity="0.15"/>
-  </svg>
+    <!-- Background layers -->
+    <div class="stars" aria-hidden="true"></div>
+    <div class="moon" aria-hidden="true"></div>
+    <div id="motes" aria-hidden="true"></div>
+    <div class="atmos" aria-hidden="true"></div>
+    <div class="atmos-2" aria-hidden="true"></div>
+    <!-- Parallax aurora -->
+    <div class="hero-aurora" aria-hidden="true"></div>
+    <!-- Particle canvas -->
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-  <div class="hero-content">
-    <div class="hero-eyebrow">Kinh tế chính trị Mác – Lênin</div>
-    <h1 class="hero-title">
-      <span class="hero-main">Ai xây nhà cho người nghèo?</span>
-      <span class="hero-second">Không phải thị trường mà là lựa chọn</span>
-    </h1>
-    <div class="hero-illustration" aria-hidden="true">
-      <svg viewBox="0 0 520 150" role="img" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="houseGold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#f3deb0"/>
-            <stop offset="1" stop-color="#b78b47"/>
-          </linearGradient>
-          <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <g opacity="0.9" filter="url(#softGlow)">
-          <path d="M90 95 L130 62 L170 95 V128 H90 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463" stroke-width="2"/>
-          <rect x="118" y="101" width="20" height="27" fill="#e8d4a8" opacity="0.75"/>
-          <rect x="147" y="105" width="11" height="11" fill="#e8d4a8" opacity="0.75"/>
-          <path d="M350 102 L392 68 L434 102 V128 H350 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463" stroke-width="2"/>
-          <rect x="379" y="103" width="22" height="25" fill="#e8d4a8" opacity="0.75"/>
-          <rect x="410" y="107" width="11" height="11" fill="#e8d4a8" opacity="0.75"/>
-          <line x1="260" y1="32" x2="260" y2="126" stroke="#c9a463" stroke-width="2"/>
-          <line x1="205" y1="58" x2="315" y2="58" stroke="#c9a463" stroke-width="2"/>
-          <line x1="215" y1="58" x2="195" y2="95" stroke="#c9a463" stroke-width="1.5"/>
-          <line x1="215" y1="58" x2="235" y2="95" stroke="#c9a463" stroke-width="1.5"/>
-          <path d="M178 95 H252 Q245 118 215 118 Q185 118 178 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463" stroke-width="1.5"/>
-          <line x1="305" y1="58" x2="285" y2="95" stroke="#c9a463" stroke-width="1.5"/>
-          <line x1="305" y1="58" x2="325" y2="95" stroke="#c9a463" stroke-width="1.5"/>
-          <path d="M268 95 H342 Q335 118 305 118 Q275 118 268 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463" stroke-width="1.5"/>
-          <rect x="238" y="126" width="44" height="4" rx="2" fill="#c9a463" opacity="0.85"/>
-        </g>
-      </svg>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Kinh tế chính trị Mác – Lênin</div>
+      <h1 class="hero-title">
+        <span class="hero-main">Ai xây nhà cho người nghèo?</span>
+        <span class="hero-second">Không phải thị trường mà là lựa chọn</span>
+      </h1>
+      <div class="hero-illustration" aria-hidden="true">
+        <svg viewBox="0 0 520 150" role="img" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="houseGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f3deb0" />
+              <stop offset="1" stop-color="#b78b47" />
+            </linearGradient>
+            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <g opacity="0.9" filter="url(#softGlow)">
+            <path d="M90 95 L130 62 L170 95 V128 H90 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463"
+              stroke-width="2" />
+            <rect x="118" y="101" width="20" height="27" fill="#e8d4a8" opacity="0.75" />
+            <rect x="147" y="105" width="11" height="11" fill="#e8d4a8" opacity="0.75" />
+            <path d="M350 102 L392 68 L434 102 V128 H350 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463"
+              stroke-width="2" />
+            <rect x="379" y="103" width="22" height="25" fill="#e8d4a8" opacity="0.75" />
+            <rect x="410" y="107" width="11" height="11" fill="#e8d4a8" opacity="0.75" />
+            <line x1="260" y1="32" x2="260" y2="126" stroke="#c9a463" stroke-width="2" />
+            <line x1="205" y1="58" x2="315" y2="58" stroke="#c9a463" stroke-width="2" />
+            <line x1="215" y1="58" x2="195" y2="95" stroke="#c9a463" stroke-width="1.5" />
+            <line x1="215" y1="58" x2="235" y2="95" stroke="#c9a463" stroke-width="1.5" />
+            <path d="M178 95 H252 Q245 118 215 118 Q185 118 178 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463"
+              stroke-width="1.5" />
+            <line x1="305" y1="58" x2="285" y2="95" stroke="#c9a463" stroke-width="1.5" />
+            <line x1="305" y1="58" x2="325" y2="95" stroke="#c9a463" stroke-width="1.5" />
+            <path d="M268 95 H342 Q335 118 305 118 Q275 118 268 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463"
+              stroke-width="1.5" />
+            <rect x="238" y="126" width="44" height="4" rx="2" fill="#c9a463" opacity="0.85" />
+          </g>
+        </svg>
+      </div>
+      <p class="hero-sub">Hai mô hình kinh tế thị trường, và một bài toán nhà ở — <span class="no-break">nơi lý luận gặp
+          thực tiễn.</span></p>
     </div>
-    <p class="hero-sub">Hai mô hình kinh tế thị trường, và một bài toán nhà ở — <span class="no-break">nơi lý luận gặp thực tiễn.</span></p>
-  </div>
 
-  <div class="hero-scroll-hint">
-    <div class="scroll-line"></div>
-    <div class="scroll-text">Cuộn xuống</div>
-  </div>
-</section>
+    <button class="hero-scroll-hint" id="scroll-hint-btn" aria-label="Cuộn xuống phần tiếp theo">
+      <div class="scroll-line"></div>
+    </button>
+  </section>
 
-<!-- SCENE 2: CƠ SỞ CHUNG -->
-<section class="scene scene-thesis" id="scene-thesis-1">
-  <div class="thesis-number">I</div>
-  <div class="thesis-eyebrow reveal">Phần I - Cơ sở chung</div>
-  <p class="thesis-body reveal reveal-delay-1">Kinh tế thị trường là nền kinh tế vận hành theo cơ chế thị trường - nền kinh tế hàng hoá phát triển cao, nơi mọi quan hệ sản xuất và trao đổi đều thông qua thị trường, chịu sự điều tiết của <strong>quy luật giá trị, cung – cầu và cạnh tranh</strong>.</p>
-  <div class="thesis-quote reveal reveal-delay-2">
-    <p>Cả hai mô hình - tư bản chủ nghĩa và định hướng xã hội chủ nghĩa - đều là kinh tế thị trường. Chúng khác nhau ở chế độ sở hữu, mục tiêu theo đuổi và vai trò của Nhà nước.</p>
-    <cite>Nguyên lý chung</cite>
-  </div>
-</section>
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
-<!-- SCENE 3: HAI MÔ HÌNH -->
-<section class="scene" id="scene-views">
-  <div class="views-eyebrow reveal">Định nghĩa đối chiếu</div>
-  <h2 class="views-title reveal reveal-delay-1" data-glow="Hai mô hình, hai điểm xuất phát">Hai mô hình, hai điểm xuất phát</h2>
+  <!-- SCENE 2: CƠ SỞ CHUNG -->
+  <section class="scene scene-thesis" id="scene-thesis-1">
+    <div class="thesis-number">I</div>
+    <div class="thesis-eyebrow reveal">Phần I - Cơ sở chung</div>
+    <p class="thesis-body reveal reveal-delay-1">Kinh tế thị trường là nền kinh tế vận hành theo cơ chế thị trường - nền
+      kinh tế hàng hoá phát triển cao, nơi mọi quan hệ sản xuất và trao đổi đều thông qua thị trường, chịu sự điều tiết
+      của <strong>quy luật giá trị, cung – cầu và cạnh tranh</strong>.</p>
+    <div class="thesis-quote reveal reveal-delay-2">
+      <p>Cả hai mô hình - tư bản chủ nghĩa và định hướng xã hội chủ nghĩa - đều là kinh tế thị trường. Chúng khác nhau ở
+        chế độ sở hữu, mục tiêu theo đuổi và vai trò của Nhà nước.</p>
+      <cite>Nguyên lý chung</cite>
+    </div>
+  </section>
 
-  <div class="views-split">
-    <div class="view-panel tbcn" data-panel="1" tabindex="0" role="button" aria-expanded="false">
-      <div class="view-label">KTTT Tư bản chủ nghĩa <span class="toggle-icon">+</span></div>
-      <p class="view-statement">Vận hành nhằm mục tiêu tối đa hoá lợi nhuận, dưới sự chi phối của giai cấp tư sản.</p>
-      <div class="view-details">
-        <div class="view-detail-item"><strong>Sở hữu:</strong> tư nhân tư bản chủ nghĩa về tư liệu sản xuất giữ vai trò chi phối.</div>
-        <div class="view-detail-item"><strong>Mục tiêu:</strong> tối đa hoá lợi nhuận, tích luỹ tư bản - giá trị thặng dư là động lực trung tâm.</div>
-        <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước tư sản can thiệp chủ yếu để khắc phục khuyết tật thị trường và duy trì ổn định chế độ.</div>
-        <div class="view-detail-item"><strong>Phân phối:</strong> theo sở hữu vốn và quy mô vốn góp, theo quy luật cung – cầu hàng hoá sức lao động.</div>
-        <div class="view-detail-item"><strong>Công bằng xã hội:</strong> là phương tiện để giữ ổn định chế độ, không phải mục tiêu tự thân.</div>
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
+
+  <!-- SCENE 3: HAI MÔ HÌNH -->
+  <section class="scene" id="scene-views">
+    <div class="views-eyebrow reveal">Định nghĩa đối chiếu</div>
+    <h2 class="views-title reveal reveal-delay-1" data-glow="Hai mô hình, hai điểm xuất phát">Hai mô hình, hai điểm xuất
+      phát</h2>
+
+    <div class="views-split">
+      <div class="view-panel tbcn" data-panel="1" tabindex="0" role="button" aria-expanded="false">
+        <div class="view-label">KTTT Tư bản chủ nghĩa <span class="toggle-icon">+</span></div>
+        <p class="view-statement">Vận hành nhằm mục tiêu tối đa hoá lợi nhuận, dưới sự chi phối của giai cấp tư sản.</p>
+        <div class="view-details">
+          <div class="view-detail-item"><strong>Sở hữu:</strong> tư nhân tư bản chủ nghĩa về tư liệu sản xuất giữ vai
+            trò chi phối.</div>
+          <div class="view-detail-item"><strong>Mục tiêu:</strong> tối đa hoá lợi nhuận, tích luỹ tư bản - giá trị thặng
+            dư là động lực trung tâm.</div>
+          <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước tư sản can thiệp chủ yếu để khắc
+            phục khuyết tật thị trường và duy trì ổn định chế độ.</div>
+          <div class="view-detail-item"><strong>Phân phối:</strong> theo sở hữu vốn và quy mô vốn góp, theo quy luật
+            cung – cầu hàng hoá sức lao động.</div>
+          <div class="view-detail-item"><strong>Công bằng xã hội:</strong> là phương tiện để giữ ổn định chế độ, không
+            phải mục tiêu tự thân.</div>
+        </div>
+      </div>
+
+      <div class="views-vs">VS</div>
+
+      <div class="view-panel xhcn" data-panel="2" tabindex="0" role="button" aria-expanded="false">
+        <div class="view-label">KTTT định hướng XHCN <span class="toggle-icon">+</span></div>
+        <p class="view-statement">Vận hành theo quy luật thị trường, đồng thời hướng tới một xã hội dân giàu, nước mạnh,
+          công bằng, văn minh.</p>
+        <div class="view-details">
+          <div class="view-detail-item"><strong>Sở hữu:</strong> đa sở hữu; kinh tế nhà nước giữ vai trò chủ đạo, kinh
+            tế tư nhân là động lực quan trọng.</div>
+          <div class="view-detail-item"><strong>Mục tiêu:</strong> dân giàu, nước mạnh, dân chủ, công bằng, văn minh;
+            phát triển lực lượng sản xuất, xây dựng CNXH.</div>
+          <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước pháp quyền XHCN của dân, do dân, vì
+            dân, dưới sự lãnh đạo của Đảng; điều tiết vì lợi ích nhân dân.</div>
+          <div class="view-detail-item"><strong>Phân phối:</strong> theo lao động, hiệu quả, đóng góp và phúc lợi xã
+            hội.</div>
+          <div class="view-detail-item"><strong>Công bằng xã hội:</strong> vừa là phương tiện, vừa là mục tiêu phải từng
+            bước hiện thực hoá.</div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="views-vs">VS</div>
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
-    <div class="view-panel xhcn" data-panel="2" tabindex="0" role="button" aria-expanded="false">
-      <div class="view-label">KTTT định hướng XHCN <span class="toggle-icon">+</span></div>
-      <p class="view-statement">Vận hành theo quy luật thị trường, đồng thời hướng tới một xã hội dân giàu, nước mạnh, công bằng, văn minh.</p>
-      <div class="view-details">
-        <div class="view-detail-item"><strong>Sở hữu:</strong> đa sở hữu; kinh tế nhà nước giữ vai trò chủ đạo, kinh tế tư nhân là động lực quan trọng.</div>
-        <div class="view-detail-item"><strong>Mục tiêu:</strong> dân giàu, nước mạnh, dân chủ, công bằng, văn minh; phát triển lực lượng sản xuất, xây dựng CNXH.</div>
-        <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước pháp quyền XHCN của dân, do dân, vì dân, dưới sự lãnh đạo của Đảng; điều tiết vì lợi ích nhân dân.</div>
-        <div class="view-detail-item"><strong>Phân phối:</strong> theo lao động, hiệu quả, đóng góp và phúc lợi xã hội.</div>
-        <div class="view-detail-item"><strong>Công bằng xã hội:</strong> vừa là phương tiện, vừa là mục tiêu phải từng bước hiện thực hoá.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SCENE: VIDEO -->
-<section class="scene" id="scene-video">
-  <div class="video-eyebrow reveal">Thước phim ngắn</div>
-  <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực tế<br><em>về câu chuyện nhà ở xã hội</em></h2>
-  <div class="video-wrapper reveal reveal-delay-2">
-    <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&playsinline=1" loading="lazy"
-      title="YouTube video player" frameborder="0" allow="
+  <!-- SCENE: VIDEO -->
+  <section class="scene" id="scene-video">
+    <div class="video-eyebrow reveal">Thước phim ngắn</div>
+    <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực
+      tế<br><em>về câu chuyện nhà ở xã hội</em></h2>
+    <div class="video-wrapper reveal reveal-delay-2">
+      <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&playsinline=1"
+        loading="lazy" title="YouTube video player" frameborder="0" allow="
         accelerometer;
         autoplay;
         clipboard-write;
@@ -172,141 +183,247 @@
         picture-in-picture;
         web-share;
       " referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
-  <a class="yt-fallback-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Mở trên YouTube nếu video bị chặn</a>
-</section>
-
-<!-- SCENE 4: CASE STUDY - BENTO GRID REDESIGN -->
-<section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2">
-  <div class="thesis-number">II</div>
-
-  <div class="bento-shell reveal">
-    <div class="bento-header">
-      <div class="bento-kicker">Phần II - Case Study</div>
-      <h2 class="bento-main-title">Vấn đề cốt lõi</h2>
     </div>
+    <a class="yt-fallback-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"
+      rel="noopener noreferrer">Mở trên YouTube nếu video bị chặn</a>
+  </section>
 
-    <div class="bento-grid">
-      <!-- Mâu thuẫn -->
-      <div class="bento-card bento-conflict">
-        <div class="bento-card-title">Mâu thuẫn</div>
-        <div class="bento-card-body">
-          <p>Doanh nghiệp cần <strong class="gold-text">lợi nhuận</strong>.</p>
-          <p>Người thu nhập thấp cần <strong class="gold-text">nhà ở giá rẻ</strong>.</p>
-        </div>
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
+
+  <!-- SCENE 4: CASE STUDY - BENTO GRID REDESIGN -->
+  <section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2">
+    <div class="thesis-number">II</div>
+
+    <div class="bento-shell reveal">
+      <div class="bento-header">
+        <div class="bento-kicker">Phần II - Case Study</div>
+        <h2 class="bento-main-title">Vấn đề cốt lõi</h2>
       </div>
 
-      <!-- Cơ chế -->
-      <div class="bento-card bento-mechanism">
-        <div class="bento-card-title">Cơ chế thị trường</div>
-        <div class="bento-card-body">
-          <p>Theo quy luật tỷ suất lợi nhuận, vốn tự động chảy vào phân khúc chung cư cao cấp — nơi biên lợi nhuận cao, thu hồi vốn nhanh.</p>
-        </div>
-      </div>
-
-      <!-- Hệ quả -->
-      <div class="bento-card bento-consequence">
-        <div class="bento-card-title warning-text">Hệ quả</div>
-        <div class="bento-card-body">
-          <p>Nếu để <strong>“bàn tay vô hình”</strong> tự điều tiết, người nghèo sẽ hoàn toàn bị gạt ra rìa.</p>
-        </div>
-      </div>
-
-      <!-- Dòng vốn -->
-      <div class="bento-card bento-flow">
-        <div class="bento-card-title">Dòng vốn thị trường</div>
-        <div class="bento-card-body flow-container">
-          <div class="flow-item flow-good">
-            <span class="flow-src">Vốn đầu tư</span>
-            <div class="flow-track"><div class="flow-particle"></div></div>
-            <span class="flow-dest">Chung cư cao cấp<br><small>Thu hồi vốn nhanh</small></span>
-          </div>
-          <div class="flow-item flow-blocked">
-            <span class="flow-src">Vốn đầu tư</span>
-            <div class="flow-track blocked-track"><div class="flow-particle blocked-particle"></div><span class="cross">✕</span></div>
-            <span class="flow-dest">Nhà ở xã hội<br><small>Cần hỗ trợ lợi nhuận</small></span>
+      <div class="bento-grid">
+        <!-- Mâu thuẫn -->
+        <div class="bento-card bento-conflict">
+          <div class="bento-card-title">Mâu thuẫn</div>
+          <div class="bento-card-body">
+            <p>Doanh nghiệp cần <strong class="gold-text">lợi nhuận</strong>.</p>
+            <p>Người thu nhập thấp cần <strong class="gold-text">nhà ở giá rẻ</strong>.</p>
           </div>
         </div>
+
+        <!-- Cơ chế -->
+        <div class="bento-card bento-mechanism">
+          <div class="bento-card-title">Cơ chế thị trường</div>
+          <div class="bento-card-body">
+            <p>Theo quy luật tỷ suất lợi nhuận, vốn tự động chảy vào phân khúc chung cư cao cấp — nơi biên lợi nhuận
+              cao, thu hồi vốn nhanh.</p>
+          </div>
+        </div>
+
+        <!-- Hệ quả -->
+        <div class="bento-card bento-consequence">
+          <div class="bento-card-title warning-text">Hệ quả</div>
+          <div class="bento-card-body">
+            <p>Nếu để <strong>“bàn tay vô hình”</strong> tự điều tiết, người nghèo sẽ hoàn toàn bị gạt ra rìa.</p>
+          </div>
+        </div>
+
+        <!-- Dòng vốn -->
+        <div class="bento-card bento-flow">
+          <div class="bento-card-title">Dòng vốn thị trường</div>
+          <div class="bento-card-body flow-container">
+
+            <!-- Track 1: Chảy thông -->
+            <div class="flow-item flow-good">
+              <div class="flow-src-block">
+                <svg class="flow-src-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+                  <rect x="2" y="6" width="20" height="14" rx="3" fill="rgba(201,164,99,0.15)" stroke="#c9a463" stroke-width="1.5"/>
+                  <circle cx="12" cy="13" r="3" fill="#c9a463" opacity="0.8"/>
+                  <line x1="2" y1="10" x2="22" y2="10" stroke="#c9a463" stroke-width="1" opacity="0.5"/>
+                </svg>
+                <span class="flow-src">Vốn đầu tư</span>
+              </div>
+              <div class="flow-track">
+                <div class="flow-coin-track">
+                  <span class="coin coin-1">💰</span>
+                  <span class="coin coin-2">💰</span>
+                  <span class="coin coin-3">💰</span>
+                </div>
+                <div class="flow-line"></div>
+              </div>
+              <div class="flow-dest-block flow-dest-good">
+                <svg class="flow-dest-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                  <path d="M3 21h18M5 21V9l7-6 7 6v12" stroke="#e8d4a8" stroke-width="1.5" stroke-linecap="round"/>
+                  <rect x="9" y="14" width="6" height="7" rx="1" fill="rgba(232,212,168,0.2)" stroke="#e8d4a8" stroke-width="1.2"/>
+                </svg>
+                <span class="flow-dest">Chung cư cao cấp<br><small>✓ Thu hồi vốn nhanh</small></span>
+              </div>
+            </div>
+
+            <!-- Track 2: Bị chặn -->
+            <div class="flow-item flow-blocked">
+              <div class="flow-src-block">
+                <svg class="flow-src-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+                  <rect x="2" y="6" width="20" height="14" rx="3" fill="rgba(201,164,99,0.1)" stroke="rgba(201,164,99,0.5)" stroke-width="1.5"/>
+                  <circle cx="12" cy="13" r="3" fill="rgba(201,164,99,0.4)"/>
+                  <line x1="2" y1="10" x2="22" y2="10" stroke="rgba(201,164,99,0.3)" stroke-width="1"/>
+                </svg>
+                <span class="flow-src">Vốn đầu tư</span>
+              </div>
+              <div class="flow-track blocked-track">
+                <div class="flow-coin-track blocked-coin-track">
+                  <span class="coin coin-b1">💸</span>
+                  <span class="coin coin-b2">💸</span>
+                </div>
+                <div class="flow-line flow-line-blocked"></div>
+                <div class="flow-block-wall">
+                  <span class="block-icon">🚫</span>
+                </div>
+              </div>
+              <div class="flow-dest-block flow-dest-bad">
+                <svg class="flow-dest-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                  <path d="M3 21h18M5 21V9l7-6 7 6v12" stroke="rgba(181,106,76,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  <rect x="9" y="14" width="6" height="7" rx="1" fill="rgba(181,106,76,0.08)" stroke="rgba(181,106,76,0.5)" stroke-width="1.2"/>
+                  <line x1="5" y1="5" x2="19" y2="19" stroke="rgba(181,106,76,0.6)" stroke-width="1.5"/>
+                </svg>
+                <span class="flow-dest">Nhà ở xã hội<br><small>✗ Cần hỗ trợ lợi nhuận</small></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Kết luận -->
+      <div class="bento-conclusion">
+        <strong>Kết luận:</strong> Can thiệp là tất yếu, nhưng không nên bằng mệnh lệnh hành chính. Công cụ đúng là biến
+        NOXH thành một cơ hội kinh doanh có lợi nhuận hợp lý cho doanh nghiệp.
       </div>
     </div>
+  </section>
 
-    <!-- Kết luận -->
-    <div class="bento-conclusion">
-      <strong>Kết luận:</strong> Can thiệp là tất yếu, nhưng không nên bằng mệnh lệnh hành chính. Công cụ đúng là biến NOXH thành một cơ hội kinh doanh có lợi nhuận hợp lý cho doanh nghiệp.
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
+
+  <!-- SCENE 5: BỐN CÔNG CỤ -->
+  <section class="scene" id="scene-analysis">
+    <div class="analysis-header">
+      <div class="analysis-eyebrow">Bốn công cụ điều tiết</div>
+      <h2 class="analysis-title" data-glow="Biến việc xây NOXH thành cơ hội kinh doanh hợp lý">Biến việc xây NOXH thành
+        cơ hội kinh doanh hợp lý</h2>
     </div>
-  </div>
-</section>
 
-<!-- SCENE 5: BỐN CÔNG CỤ -->
-<section class="scene" id="scene-analysis">
-  <div class="analysis-header">
-    <div class="analysis-eyebrow">Bốn công cụ điều tiết</div>
-    <h2 class="analysis-title" data-glow="Biến việc xây NOXH thành cơ hội kinh doanh hợp lý">Biến việc xây NOXH thành cơ hội kinh doanh hợp lý</h2>
-  </div>
+    <div class="analysis-container">
+      <div class="analysis-detail-pane"></div>
+      <div class="analysis-grid">
 
-  <div class="analysis-container">
-    <div class="analysis-detail-pane"></div>
-    <div class="analysis-grid">
-
-      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
-        <div class="card-num">01</div>
-        <div class="card-title">Đất đai</div>
-        <div class="card-body">
-          <p><strong>Bản chất:</strong> Chi phí đất đai và địa tô chiếm tỷ trọng cực lớn trong giá nhà, đẩy giá vượt sức mua của người dân.</p>
-          <p><strong>Cơ chế:</strong> Nhà nước, với vai trò đại diện chủ sở hữu toàn dân về đất đai, miễn/giảm tiền sử dụng đất và bàn giao quỹ đất sạch cho doanh nghiệp.</p>
-          <p class="result"><strong>Kết quả:</strong> Giá nhà giảm còn 15–20 triệu/m², doanh nghiệp vẫn đảm bảo mức lời định mức khoảng 10% trên chi phí xây dựng.</p>
+        <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+          <svg class="card-icon" viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"/>
+            <line x1="9" y1="3" x2="9" y2="18"/>
+            <line x1="15" y1="6" x2="15" y2="21"/>
+          </svg>
+          <div class="card-num">01</div>
+          <div class="card-title">Đất đai</div>
+          <div class="card-hint">Nhấp để xem</div>
+          <div class="card-body">
+            <p><strong>Bản chất:</strong> Chi phí đất đai và địa tô chiếm tỷ trọng cực lớn trong giá nhà, đẩy giá vượt
+              sức mua của người dân.</p>
+            <p><strong>Cơ chế:</strong> Nhà nước, với vai trò đại diện chủ sở hữu toàn dân về đất đai, miễn/giảm tiền sử
+              dụng đất và bàn giao quỹ đất sạch cho doanh nghiệp.</p>
+            <p class="result"><strong>Kết quả:</strong> Giá nhà giảm còn 15–20 triệu/m², doanh nghiệp vẫn đảm bảo mức
+              lời định mức khoảng 10% trên chi phí xây dựng.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
-        <div class="card-num">02</div>
-        <div class="card-title">Thuế</div>
-        <div class="card-body">
-          <p><strong>Ưu đãi NOXH:</strong> Miễn, giảm thuế VAT đầu ra và thuế thu nhập doanh nghiệp kịch khung cho chủ đầu tư.</p>
-          <p><strong>Siết cao cấp:</strong> Đánh thuế tài sản luỹ tiến hoặc thuế cao với bất động sản thứ hai và hành vi đầu cơ.</p>
-          <p class="result"><strong>Kết quả:</strong> Lợi nhuận kỳ vọng ở phân khúc cao cấp giảm, vốn tự dịch chuyển về nơi có lợi tức ổn định.</p>
+        <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+          <svg class="card-icon" viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+            <circle cx="9" cy="15" r="1"/>
+            <circle cx="15" cy="9" r="1"/>
+          </svg>
+          <div class="card-num">02</div>
+          <div class="card-title">Thuế</div>
+          <div class="card-hint">Nhấp để xem</div>
+          <div class="card-body">
+            <p><strong>Ưu đãi NOXH:</strong> Miễn, giảm thuế VAT đầu ra và thuế thu nhập doanh nghiệp kịch khung cho chủ
+              đầu tư.</p>
+            <p><strong>Siết cao cấp:</strong> Đánh thuế tài sản luỹ tiến hoặc thuế cao với bất động sản thứ hai và hành
+              vi đầu cơ.</p>
+            <p class="result"><strong>Kết quả:</strong> Lợi nhuận kỳ vọng ở phân khúc cao cấp giảm, vốn tự dịch chuyển
+              về nơi có lợi tức ổn định.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
-        <div class="card-num">03</div>
-        <div class="card-title">Tín dụng & lãi suất</div>
-        <div class="card-body">
-          <p><strong>Bản chất:</strong> Lãi suất vay ngân hàng là con dao hai lưỡi - vừa ăn mòn lợi nhuận doanh nghiệp, vừa đè nặng lên vai người mua nhà.</p>
-          <p><strong>Phía cung:</strong> Chủ đầu tư tiếp cận gói vay xây dựng dài hạn, lãi suất thấp, giảm chi phí tài chính suốt thi công.</p>
-          <p><strong>Phía cầu:</strong> Người thu nhập trung bình – thấp vay ưu đãi lãi suất cố định thấp, kỳ hạn 15–25 năm, qua Ngân hàng Chính sách xã hội.</p>
-          <p class="result"><strong>Kết quả:</strong> Doanh nghiệp hạ giá thành, nhu cầu tự nhiên chuyển thành sức mua thực tế; vốn xoay vòng liên tục.</p>
+        <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+          <svg class="card-icon" viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/>
+            <path d="M3 10h18"/>
+            <path d="M5 6l7-3 7 3"/>
+            <path d="M4 10v11"/>
+            <path d="M20 10v11"/>
+            <path d="M8 14v3"/>
+            <path d="M12 14v3"/>
+            <path d="M16 14v3"/>
+          </svg>
+          <div class="card-num">03</div>
+          <div class="card-title">Tín dụng & lãi suất</div>
+          <div class="card-hint">Nhấp để xem</div>
+          <div class="card-body">
+            <p><strong>Bản chất:</strong> Lãi suất vay ngân hàng là con dao hai lưỡi - vừa ăn mòn lợi nhuận doanh
+              nghiệp, vừa đè nặng lên vai người mua nhà.</p>
+            <p><strong>Phía cung:</strong> Chủ đầu tư tiếp cận gói vay xây dựng dài hạn, lãi suất thấp, giảm chi phí tài
+              chính suốt thi công.</p>
+            <p><strong>Phía cầu:</strong> Người thu nhập trung bình – thấp vay ưu đãi lãi suất cố định thấp, kỳ hạn
+              15–25 năm, qua Ngân hàng Chính sách xã hội.</p>
+            <p class="result"><strong>Kết quả:</strong> Doanh nghiệp hạ giá thành, nhu cầu tự nhiên chuyển thành sức mua
+              thực tế; vốn xoay vòng liên tục.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
-        <div class="card-num">04</div>
-        <div class="card-title">Thể chế</div>
-        <div class="card-body">
-          <p><strong>Rủi ro:</strong> NOXH nhận ưu đãi rất lớn từ nguồn lực công, mang tính an sinh sâu sắc và dễ bị trục lợi kiểu "người giàu đi ô tô tranh suất mua của người nghèo".</p>
-          <p><strong>Minh bạch:</strong> Đối chiếu dữ liệu dân cư quốc gia, mã số thuế cá nhân và tình trạng sở hữu tài sản thực tế.</p>
-          <p><strong>Giám sát:</strong> Chế tài phạt nặng với hành vi đầu cơ, gom hàng hoặc bán lại suất mua trái phép.</p>
-          <p class="result"><strong>Kết quả:</strong> Nhà ở đến đúng tay người cần, giữ nguyên vẹn mục tiêu an sinh của chính sách.</p>
+        <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+          <svg class="card-icon" viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <div class="card-num">04</div>
+          <div class="card-title">Thể chế</div>
+          <div class="card-hint">Nhấp để xem</div>
+          <div class="card-body">
+            <p><strong>Rủi ro:</strong> NOXH nhận ưu đãi rất lớn từ nguồn lực công, mang tính an sinh sâu sắc và dễ bị
+              trục lợi kiểu "người giàu đi ô tô tranh suất mua của người nghèo".</p>
+            <p><strong>Minh bạch:</strong> Đối chiếu dữ liệu dân cư quốc gia, mã số thuế cá nhân và tình trạng sở hữu
+              tài sản thực tế.</p>
+            <p><strong>Giám sát:</strong> Chế tài phạt nặng với hành vi đầu cơ, gom hàng hoặc bán lại suất mua trái
+              phép.</p>
+            <p class="result"><strong>Kết quả:</strong> Nhà ở đến đúng tay người cần, giữ nguyên vẹn mục tiêu an sinh
+              của chính sách.</p>
+          </div>
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SCENE 6: KẾT LUẬN -->
-<section class="scene" id="scene-conclusion">
-  <div class="conclusion-glow"></div>
-  <div class="conclusion-content">
-    <div class="conclusion-eyebrow reveal">Kết luận</div>
-    <h2 class="conclusion-title reveal reveal-delay-1" data-glow="Cân bằng không đến từ cực đoan, mà từ công cụ đúng.">Cân bằng không đến từ cực đoan,<br><em>mà từ công cụ đúng.</em></h2>
-    <p class="conclusion-body" id="conclusion-text">Sự bế tắc của Nhà ở xã hội không thể giải quyết bằng tư duy thị trường cực đoan, cũng không thể giải quyết bằng mệnh lệnh áp đặt. Nhà nước điều tiết vĩ mô bằng công cụ kinh tế - đất đai, thuế, tín dụng, thể chế - chính là chìa khoá để hài hoà lợi ích giữa doanh nghiệp và người dân, hướng tới một nền kinh tế thị trường bền vững, công bằng và văn minh.</p>
-    <div class="conclusion-divider"></div>
-    <div class="conclusion-tag">Kinh tế chính trị Mác – Lênin · KTTT & Nhà ở xã hội</div>
-  </div>
-</section>
+  <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
-<script src="script.js" defer></script>
+  <!-- SCENE 6: KẾT LUẬN -->
+  <section class="scene" id="scene-conclusion">
+    <div class="conclusion-glow"></div>
+    <div class="conclusion-content">
+      <div class="conclusion-eyebrow reveal">Kết luận</div>
+      <h2 class="conclusion-title reveal reveal-delay-1"
+        data-glow="Cân bằng không đến từ cực đoan, mà từ công cụ đúng.">Cân bằng không đến từ cực đoan,<br><em>mà từ
+          công cụ đúng.</em></h2>
+      <p class="conclusion-body" id="conclusion-text">Sự bế tắc của Nhà ở xã hội không thể giải quyết bằng tư duy thị
+        trường cực đoan, cũng không thể giải quyết bằng mệnh lệnh áp đặt. Nhà nước điều tiết vĩ mô bằng công cụ kinh tế
+        - đất đai, thuế, tín dụng, thể chế - chính là chìa khoá để hài hoà lợi ích giữa doanh nghiệp và người dân, hướng
+        tới một nền kinh tế thị trường bền vững, công bằng và văn minh.</p>
+      <div class="conclusion-divider"></div>
+      <div class="conclusion-tag">Kinh tế chính trị Mác – Lênin · KTTT & Nhà ở xã hội</div>
+    </div>
+  </section>
+
+  <script src="script.js" defer></script>
 
 </body>
+
 </html>
