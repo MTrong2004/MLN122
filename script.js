@@ -1,3 +1,16 @@
+/**
+ * [AI CONTEXT NOTE]
+ * - Project: Interactive presentation on "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội".
+ * - Role of this file: Interactive logic, animations, and UI state management.
+ * - Key features implemented:
+ *   - Scroll progress, dynamic section header text, and indicator dots navigation.
+ *   - Mouse parallax (hero background aurora, moon, stars) and Canvas gold dust animation.
+ *   - Interaction panels for model comparison (accordion expand/collapse).
+ *   - IntersectionObserver triggers for scroll reveal animations.
+ *   - 3D hover/tilt effects on the four tool cards in Scene 6.
+ *   - Custom audio commentary controller (Text-to-Speech playback logic, sync, progress bars).
+ *   - Preloader page fadeout.
+ */
 (function () {
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
@@ -201,12 +214,59 @@
     else viewsSection.classList.add('theme-' + (opened[0] + 1));
   }
 
+  // Hàm cân bằng chiều cao các mục so sánh ở 2 cột (KTTT Tư bản vs Định hướng XHCN)
+  function equalizeDetailItems() {
+    const tbcnPanel = $('.view-panel.tbcn');
+    const xhcnPanel = $('.view-panel.xhcn');
+    if (!tbcnPanel || !xhcnPanel) return;
+
+    const tbcnStatement = $('.view-statement', tbcnPanel);
+    const xhcnStatement = $('.view-statement', xhcnPanel);
+    const tbcnItems = $$('.view-detail-item', tbcnPanel);
+    const xhcnItems = $$('.view-detail-item', xhcnPanel);
+
+    // Reset lại chiều cao tự nhiên để đo chính xác
+    if (tbcnStatement) tbcnStatement.style.height = '';
+    if (xhcnStatement) xhcnStatement.style.height = '';
+    tbcnItems.forEach(function (item) { item.style.height = ''; });
+    xhcnItems.forEach(function (item) { item.style.height = ''; });
+
+    const isTbcnExpanded = tbcnPanel.classList.contains('expanded');
+    const isXhcnExpanded = xhcnPanel.classList.contains('expanded');
+
+    // Chỉ thực hiện căn bằng chiều cao khi cả 2 thẻ cùng đang mở
+    if (isTbcnExpanded && isXhcnExpanded) {
+      // 1. Cân bằng dòng Statement giới thiệu
+      if (tbcnStatement && xhcnStatement) {
+        const h1 = tbcnStatement.offsetHeight;
+        const h2 = xhcnStatement.offsetHeight;
+        const maxH = Math.max(h1, h2);
+        tbcnStatement.style.height = maxH + 'px';
+        xhcnStatement.style.height = maxH + 'px';
+      }
+
+      // 2. Cân bằng từng mục chi tiết (Sở hữu, Mục tiêu, Vai trò, Phân phối, Công bằng)
+      const count = Math.min(tbcnItems.length, xhcnItems.length);
+      for (let i = 0; i < count; i++) {
+        const h1 = tbcnItems[i].offsetHeight;
+        const h2 = xhcnItems[i].offsetHeight;
+        const maxH = Math.max(h1, h2);
+        tbcnItems[i].style.height = maxH + 'px';
+        xhcnItems[i].style.height = maxH + 'px';
+      }
+    }
+  }
+
+  // Lắng nghe sự kiện thay đổi kích thước màn hình để tự động tính lại
+  window.addEventListener('resize', equalizeDetailItems, { passive: true });
+
   viewPanels.forEach(function (panel) {
     function toggle() {
       const willOpen = !panel.classList.contains('expanded');
       panel.classList.toggle('expanded', willOpen);
       panel.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
       updateViewsTheme();
+      equalizeDetailItems(); // Đồng bộ chiều cao khi mở/đóng thẻ
 
       if (willOpen) {
         // Tự động cuộn căn lề trên phần Hai mô hình vừa khít dưới Navbar cố định
@@ -277,11 +337,20 @@
     analysisContainer.classList.add('has-active');
     analysisSection.classList.add('has-active-card');
 
+    // Tính toán tọa độ cuộn ổn định độc lập với hiệu ứng chuyển cảnh
+    const nav = document.querySelector('nav');
+    const navH = nav ? nav.getBoundingClientRect().height : 0;
+    const sectionTop = analysisSection.getBoundingClientRect().top + window.scrollY;
+    const viewportH = window.innerHeight;
+    const containerH = analysisContainer.offsetHeight;
+    
+    // 12vh padding-top là 12% của chiều cao viewport
+    const paddingTop = 12 * viewportH / 100;
+    const centeringOffset = Math.max(paddingTop, (viewportH - containerH) / 2);
+    const targetTop = sectionTop + centeringOffset - navH - 24;
+
     // Tự động cuộn căn lề trên phần Bốn công cụ khớp dưới Navbar
     setTimeout(function () {
-      const nav = document.querySelector('nav');
-      const navH = nav ? nav.getBoundingClientRect().height : 0;
-      const targetTop = analysisContainer.getBoundingClientRect().top + window.scrollY - navH - 24;
       window.scrollTo({ top: targetTop, behavior: 'smooth' });
     }, 150);
 
@@ -386,7 +455,7 @@
 
   if (sectionDots && pageSections.length) {
     sectionDots.innerHTML = pageSections.map(function (sec, i) {
-      const label = sectionLabels[sec.id] || ('Phần ' + (i + 1));
+      const label = sec.getAttribute('data-dot-label') || sectionLabels[sec.id] || ('Phần ' + (i + 1));
       return '<button class="section-dot" type="button" data-index="' + i + '" data-label="' + label + '" aria-label="' + label + '"></button>';
     }).join('');
 
@@ -437,8 +506,86 @@
       scrollToSection(1);
     });
   }
+  // ---------- Conclusion Balance Scale Widget ----------
+  const balanceWidget = $('.conclusion-balance-widget');
+  if (balanceWidget) {
+    const btns = $$('.balance-btn', balanceWidget);
+    const beam = $('.scale-beam', balanceWidget);
+    const title = $('.info-card-title', balanceWidget);
+    const desc = $('.info-card-desc', balanceWidget);
+    const profitVal = $('.val-profit', balanceWidget);
+    const welfareVal = $('.val-welfare', balanceWidget);
 
+    const states = {
+      free: {
+        rot: '12deg',
+        title: 'Tự điều tiết cực đoan (Bàn tay vô hình)',
+        desc: 'Khi để thị trường tự do hoàn toàn, dòng vốn chỉ chảy vào phân khúc chung cư cao cấp để tối đa hóa lợi nhuận. Doanh nghiệp thu lợi lớn nhưng người thu nhập thấp hoàn toàn bị gạt ra ngoài rìa xã hội, không thể tiếp cận nhà ở.',
+        profit: 'Cực kỳ cao',
+        profitClass: 'val-high',
+        welfare: 'Gần như bằng 0',
+        welfareClass: 'val-low'
+      },
+      force: {
+        rot: '-12deg',
+        title: 'Mệnh lệnh áp đặt cực đoan (Hành chính)',
+        desc: 'Khi Nhà nước dùng mệnh lệnh hành chính ép giá thấp mà không hỗ trợ, doanh nghiệp bị triệt tiêu động lực vì không có lợi nhuận. Vốn lập tức rút khỏi thị trường, dẫn đến khan hiếm nguồn cung trầm trọng, không có dự án nào được xây dựng.',
+        profit: 'Không có / Âm',
+        profitClass: 'val-low',
+        welfare: 'Không có nhà để mua',
+        welfareClass: 'val-low'
+      },
+      macro: {
+        rot: '0deg',
+        title: 'Điều tiết vĩ mô (Định hướng XHCN)',
+        desc: 'Nhà nước không dùng mệnh lệnh hành chính mà điều tiết vĩ mô bằng 4 công cụ (Đất đai, Thuế, Tín dụng, Thể chế) để hướng dòng vốn. Doanh nghiệp đạt lợi nhuận định mức ổn định (~10%), người dân tiếp cận được NOXH giá rẻ thực chất.',
+        profit: 'Định mức ổn định (~10%)',
+        profitClass: 'val-normal',
+        welfare: 'Bảo đảm an sinh thực chất',
+        welfareClass: 'val-normal'
+      }
+    };
 
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const stateKey = btn.getAttribute('data-state');
+        const state = states[stateKey];
+        if (!state) return;
+
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (beam) {
+          beam.style.setProperty('--beam-rot', state.rot);
+          // Đồng bộ góc quay cho đĩa cân luôn treo thẳng đứng
+          const pans = $$('.scale-pan', beam);
+          pans.forEach(function (pan) {
+            pan.style.transform = 'rotate(calc(-1 * ' + state.rot + '))';
+          });
+        }
+
+        const infoCard = $('.balance-info-card', balanceWidget);
+        if (infoCard) {
+          infoCard.style.opacity = '0';
+          infoCard.style.transform = 'translateY(8px)';
+          setTimeout(function () {
+            if (title) title.textContent = state.title;
+            if (desc) desc.textContent = state.desc;
+            if (profitVal) {
+              profitVal.textContent = state.profit;
+              profitVal.className = 'metric-val val-profit ' + state.profitClass;
+            }
+            if (welfareVal) {
+              welfareVal.textContent = state.welfare;
+              welfareVal.className = 'metric-val val-welfare ' + state.welfareClass;
+            }
+            infoCard.style.opacity = '1';
+            infoCard.style.transform = 'translateY(0)';
+          }, 200);
+        }
+      });
+    });
+  }
 
 })();
 
@@ -519,4 +666,135 @@ document.addEventListener('DOMContentLoaded', function () {
       glow.style.setProperty('--glow-opacity', opacity);
     }
   });
+});
+
+// ======================================================
+// ✨ HẠT VÀNG BAY QUANH "Bàn tay kiến tạo"
+// ======================================================
+(function () {
+  const kientaoEl = document.querySelector('.hero-kientao');
+  if (!kientaoEl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function spawnParticle() {
+    const rect = kientaoEl.getBoundingClientRect();
+    if (rect.width === 0) return;
+
+    const p = document.createElement('span');
+    p.className = 'kientao-particle';
+
+    // Kích thước ngẫu nhiên 2–5px
+    const size = 2 + Math.random() * 3.5;
+    p.style.width  = size + 'px';
+    p.style.height = size + 'px';
+
+    // Vị trí ngẫu nhiên dọc theo chữ (x trong rect, y ±8px quanh đường baseline)
+    const x = rect.left + Math.random() * rect.width;
+    const y = rect.top  + Math.random() * rect.height;
+    p.style.left = x + 'px';
+    p.style.top  = y + 'px';
+
+    // Hướng bay ngẫu nhiên: lên trên, lệch trái/phải một chút
+    const dx = (Math.random() - 0.5) * 28;
+    const dy = -(28 + Math.random() * 30);
+    const dur = 0.85 + Math.random() * 0.7;
+
+    p.style.setProperty('--dx', dx + 'px');
+    p.style.setProperty('--dy', dy + 'px');
+    p.style.setProperty('--dur', dur + 's');
+
+    document.body.appendChild(p);
+
+    // Dọn dẹp sau khi animation kết thúc
+    setTimeout(() => p.remove(), dur * 1000 + 50);
+  }
+
+  // Spawn mỗi 140ms (khoảng 7 hạt/giây, đủ dày mà không nặng)
+  setInterval(spawnParticle, 140);
+})();
+
+// ======================================================
+// 🌫️ HẠT BẠC BAY QUANH "Bàn tay vô hình"
+// ======================================================
+(function () {
+  const vohinhEl = document.querySelector('.hero-vohinh');
+  if (!vohinhEl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function spawnVohinhParticle() {
+    const rect = vohinhEl.getBoundingClientRect();
+    if (rect.width === 0) return;
+
+    const p = document.createElement('span');
+    p.className = 'vohinh-particle';
+
+    // Nhỏ hơn và mờ hơn hạt vàng — gợi sự "vô hình"
+    const size = 1.5 + Math.random() * 3;
+    p.style.width  = size + 'px';
+    p.style.height = size + 'px';
+
+    const x = rect.left + Math.random() * rect.width;
+    const y = rect.top  + Math.random() * rect.height;
+    p.style.left = x + 'px';
+    p.style.top  = y + 'px';
+
+    // Bay theo mọi hướng — không chỉ lên, gợi sự phân tán hỗn loạn
+    const dx = (Math.random() - 0.5) * 36;
+    const dy = -(18 + Math.random() * 38);
+    const dur = 1.0 + Math.random() * 0.9;
+
+    p.style.setProperty('--dx', dx + 'px');
+    p.style.setProperty('--dy', dy + 'px');
+    p.style.setProperty('--dur', dur + 's');
+
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), dur * 1000 + 50);
+  }
+
+  // Thưa hơn hạt vàng một chút (170ms) — hiệu ứng nhẹ nhàng, bí ẩn hơn
+  setInterval(spawnVohinhParticle, 170);
+})();
+
+// ======================================================
+// 🌫️ FORCE-HIDE "Bàn tay vô hình" ngay khi DOM sẵn sàng
+// ======================================================
+document.addEventListener('DOMContentLoaded', function () {
+  const vohinhEl = document.querySelector('.hero-vohinh');
+  if (vohinhEl) {
+    vohinhEl.style.setProperty('opacity', '0', 'important');
+  }
+});
+
+// ======================================================
+// 🌫️ ẨN HIỆN "Bàn tay vô hình" — JS opacity animator
+// ======================================================
+document.addEventListener('DOMContentLoaded', function () {
+  const el = document.querySelector('.hero-vohinh');
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const PERIOD   = 7000;  // chu kỳ 7s
+  const PEAK_AT  = 0.50;  // đỉnh sáng nhất ở giữa chu kỳ
+  const HALF_WIN = 0.10;  // cửa sổ ẩn hiện: ±10% = 20% tổng chu kỳ (~1.4s)
+  const MAX_OP   = 0.38;  // độ mờ tối đa khi "xuất hiện"
+
+  let startTime = null;
+
+  function animate(ts) {
+    if (!startTime) startTime = ts;
+    const t = ((ts - startTime) % PERIOD) / PERIOD; // 0 → 1
+
+    // Khoảng cách từ t đến PEAK_AT (xử lý wrap-around)
+    let dist = Math.abs(t - PEAK_AT);
+    if (dist > 0.5) dist = 1 - dist;
+
+    let opacity = 0;
+    if (dist < HALF_WIN) {
+      // sin curve: mượt mà xuất hiện và biến mất
+      const progress = (HALF_WIN - dist) / HALF_WIN; // 1 tại đỉnh, 0 ở rìa
+      opacity = Math.sin(progress * Math.PI / 2) * MAX_OP;
+    }
+
+    el.style.setProperty('opacity', opacity.toFixed(4), 'important');
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 });

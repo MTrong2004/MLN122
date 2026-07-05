@@ -1,3 +1,18 @@
+<!--
+  [AI CONTEXT NOTE]
+  - Project: Interactive presentation on "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội" (Social Housing under Capitalist vs Socialist-oriented Market Economies).
+  - Subject: Marxist-Leninist Political Economy (Kinh tế chính trị Mác – Lênin).
+  - Role of this file: Main HTML structure, layout, text content, SVG diagrams, and embedding style.css and script.js.
+  - Sections:
+    1. Preloader & Navigation
+    2. Scene 1: Hero (Intro, custom canvas/svg layout)
+    3. Scene 2: Part I - General Basis (Thesis 1)
+    4. Scene 3: Two Models Comparison (TBCN vs ĐH XHCN panels)
+    5. Scene 4: Video / Perspective (Embedded Youtube player)
+    6. Scene 5: Part II - Core Issue (Thesis 2)
+    7. Scene 6: Four Regulatory Tools (Interaction cards: Land, Tax, Credit, System)
+    8. Scene 7: Conclusion
+-->
 <!-- Re-trigger deployment build -->
 <!doctype html>
 <html lang="vi">
@@ -36,7 +51,7 @@
   </nav>
 
   <!-- SCENE 1: HERO -->
-  <section class="scene" id="scene-hero">
+  <section class="scene" id="scene-hero" data-dot-label="Mở đầu">
 
     <!-- Background layers -->
     <div class="stars" aria-hidden="true"></div>
@@ -53,7 +68,7 @@
       <div class="hero-eyebrow">Kinh tế chính trị Mác – Lênin</div>
       <h1 class="hero-title">
         <span class="hero-main">Ai xây nhà cho người nghèo?</span>
-        <span class="hero-second">Không phải thị trường mà là lựa chọn</span>
+        <span class="hero-second">Không nhờ '<span class="hero-vohinh">Bàn tay vô hình</span>' — Mà bằng '<span class="hero-kientao">Bàn tay kiến tạo</span>'</span>
       </h1>
       <div class="hero-illustration" aria-hidden="true">
         <svg viewBox="0 0 520 150" role="img" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +120,7 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE 2: CƠ SỞ CHUNG -->
-  <section class="scene scene-thesis" id="scene-thesis-1">
+  <section class="scene scene-thesis" id="scene-thesis-1" data-dot-label="Cơ sở lý luận">
     <div class="thesis-number">I</div>
     <div class="thesis-eyebrow reveal">Phần I - Cơ sở chung</div>
     <p class="thesis-body reveal reveal-delay-1">Kinh tế thị trường là nền kinh tế vận hành theo cơ chế thị trường - nền
@@ -121,7 +136,7 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE 3: HAI MÔ HÌNH -->
-  <section class="scene" id="scene-views">
+  <section class="scene" id="scene-views" data-dot-label="Hai mô hình">
     <div class="views-eyebrow reveal">Định nghĩa đối chiếu</div>
     <h2 class="views-title reveal reveal-delay-1" data-glow="Hai mô hình, hai điểm xuất phát">Hai mô hình, hai điểm xuất
       phát</h2>
@@ -149,7 +164,7 @@
       <div class="view-panel xhcn" data-panel="2" tabindex="0" role="button" aria-expanded="false">
         <div class="view-label">KTTT định hướng XHCN <span class="toggle-icon">+</span></div>
         <p class="view-statement">Vận hành theo quy luật thị trường, đồng thời hướng tới một xã hội dân giàu, nước mạnh,
-          công bằng, văn minh.</p>
+          công bằng.</p>
         <div class="view-details">
           <div class="view-detail-item"><strong>Sở hữu:</strong> đa sở hữu; kinh tế nhà nước giữ vai trò chủ đạo, kinh
             tế tư nhân là động lực quan trọng.</div>
@@ -169,7 +184,7 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE: VIDEO -->
-  <section class="scene" id="scene-video">
+  <section class="scene" id="scene-video" data-dot-label="Phóng sự thực tế">
     <div class="video-eyebrow reveal">Thước phim ngắn</div>
     <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực
       tế<br><em>về câu chuyện nhà ở xã hội</em></h2>
@@ -192,7 +207,7 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE 4: CASE STUDY - BENTO GRID REDESIGN -->
-  <section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2">
+  <section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2" data-dot-label="Vấn đề cốt lõi">
     <div class="thesis-number">II</div>
 
     <div class="bento-shell reveal">
@@ -305,7 +320,7 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE 5: BỐN CÔNG CỤ -->
-  <section class="scene" id="scene-analysis">
+  <section class="scene" id="scene-analysis" data-dot-label="Bốn công cụ">
     <div class="analysis-header">
       <div class="analysis-eyebrow">Bốn công cụ điều tiết</div>
       <h2 class="analysis-title" data-glow="Biến việc xây NOXH thành cơ hội kinh doanh hợp lý">Biến việc xây NOXH thành
@@ -407,19 +422,69 @@
   <div class="gold-divider" aria-hidden="true"><span class="gold-divider-gem"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" /></svg></span></div>
 
   <!-- SCENE 6: KẾT LUẬN -->
-  <section class="scene" id="scene-conclusion">
+  <section class="scene" id="scene-conclusion" data-dot-label="Kết luận">
     <div class="conclusion-glow"></div>
-    <div class="conclusion-content">
-      <div class="conclusion-eyebrow reveal">Kết luận</div>
-      <h2 class="conclusion-title reveal reveal-delay-1"
-        data-glow="Cân bằng không đến từ cực đoan, mà từ công cụ đúng.">Cân bằng không đến từ cực đoan,<br><em>mà từ
-          công cụ đúng.</em></h2>
-      <p class="conclusion-body" id="conclusion-text">Sự bế tắc của Nhà ở xã hội không thể giải quyết bằng tư duy thị
-        trường cực đoan, cũng không thể giải quyết bằng mệnh lệnh áp đặt. Nhà nước điều tiết vĩ mô bằng công cụ kinh tế
-        - đất đai, thuế, tín dụng, thể chế - chính là chìa khoá để hài hoà lợi ích giữa doanh nghiệp và người dân, hướng
-        tới một nền kinh tế thị trường bền vững, công bằng và văn minh.</p>
-      <div class="conclusion-divider"></div>
-      <div class="conclusion-tag">Kinh tế chính trị Mác – Lênin · KTTT & Nhà ở xã hội</div>
+    <div class="conclusion-grid-wrapper">
+      
+      <!-- Cột trái: Văn bản kết luận -->
+      <div class="conclusion-text-col">
+        <h2 class="conclusion-title reveal reveal-delay-1"
+          data-glow="Cân bằng không đến từ cực đoan, mà từ công cụ đúng.">Cân bằng không đến từ cực đoan,<br><em>mà từ
+            công cụ đúng.</em></h2>
+        <p class="conclusion-body" id="conclusion-text">Sự bế tắc của Nhà ở xã hội không thể giải quyết bằng tư duy thị
+          trường cực đoan, cũng không thể giải quyết bằng mệnh lệnh áp đặt. Nhà nước điều tiết vĩ mô bằng công cụ kinh tế
+          - đất đai, thuế, tín dụng, thể chế - chính là chìa khoá để hài hoà lợi ích giữa doanh nghiệp và người dân, hướng
+          tới một nền kinh tế thị trường bền vững, công bằng và văn minh.</p>
+        <div class="conclusion-divider"></div>
+        <div class="conclusion-tag">Kinh tế chính trị Mác – Lênin · KTTT & Nhà ở xã hội</div>
+      </div>
+
+      <!-- Cột phải: Cán cân tương tác -->
+      <div class="conclusion-widget-col">
+        <div class="conclusion-balance-widget reveal reveal-delay-2">
+          <div class="balance-controls">
+            <button class="balance-btn active" data-state="free">Thị trường tự do</button>
+            <button class="balance-btn" data-state="force">Mệnh lệnh áp đặt</button>
+            <button class="balance-btn" data-state="macro">Điều tiết vĩ mô</button>
+          </div>
+          <div class="balance-display-grid">
+            <!-- Cán cân hiển thị -->
+            <div class="balance-scale-wrapper">
+              <div class="scale-base"></div>
+              <div class="scale-pillar"></div>
+              <div class="scale-beam" style="--beam-rot: 12deg;">
+                <!-- Left pan: Lợi nhuận -->
+                <div class="scale-pan pan-left" style="transform: rotate(-12deg);">
+                  <div class="pan-strings"></div>
+                  <div class="pan-plate">Lợi nhuận</div>
+                </div>
+                <!-- Right pan: An sinh -->
+                <div class="scale-pan pan-right" style="transform: rotate(-12deg);">
+                  <div class="pan-strings"></div>
+                  <div class="pan-plate">An sinh</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nội dung mô tả chi tiết -->
+            <div class="balance-info-card">
+              <h4 class="info-card-title">Tự điều tiết cực đoan (Bàn tay vô hình)</h4>
+              <p class="info-card-desc">Khi để thị trường tự do hoàn toàn, dòng vốn chỉ chảy vào phân khúc chung cư cao cấp để tối đa hóa lợi nhuận. Doanh nghiệp thu lợi lớn nhưng người thu nhập thấp hoàn toàn bị gạt ra ngoài rìa xã hội, không thể tiếp cận nhà ở.</p>
+              <div class="info-card-metric">
+                <div class="metric-row">
+                  <span class="metric-label">Lợi nhuận doanh nghiệp:</span>
+                  <span class="metric-val val-profit val-high">Cực kỳ cao</span>
+                </div>
+                <div class="metric-row">
+                  <span class="metric-label">Phúc lợi người dân:</span>
+                  <span class="metric-val val-welfare val-low">Gần như bằng 0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
