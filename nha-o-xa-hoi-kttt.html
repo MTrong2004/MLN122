@@ -1,0 +1,1578 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --deep:#15110c;
+  --deep2:#0c0a07;
+  --fog:#f2ece1;
+  --mist:#c8bea9;
+  --gold:#c9a463;
+  --gold-bright:#e8d4a8;
+  --brick:#b56a4c;
+  --brick-soft:rgba(181,106,76,0.14);
+  --sage:#8ca17e;
+  --sage-soft:rgba(140,161,126,0.14);
+  --line:rgba(201,164,99,0.16);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:auto;}
+body{
+  background:var(--deep);
+  color:var(--fog);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:6px;
+}
+
+/* ---------- PROGRESS ---------- */
+#progress{
+  position:fixed; top:0; left:0; z-index:999;
+  height:2px; width:0%;
+  background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+  transition:width 0.1s linear;
+}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:2rem 4rem;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; letter-spacing:0.28em;
+  color:var(--mist); opacity:0;
+  animation:fadeUp 1s 0.5s forwards;
+}
+.nav-tag{
+  font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--mist); opacity:0;
+  animation:fadeUp 1s 0.8s forwards;
+}
+@media (max-width:700px){ nav{padding:1.4rem 1.6rem;} .nav-tag{display:none;} }
+
+/* ---------- SCENE SHELL ---------- */
+.scene{
+  position:relative; min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+
+/* ---------- HERO ---------- */
+#scene-hero{ background:var(--deep); }
+.sky{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, #0a0808 0%, #171009 35%, #241708 62%, #120d08 100%);
+}
+.stars{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(1px 1px at 12% 12%, rgba(240,225,200,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 8%, rgba(240,225,200,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 6%, rgba(240,225,200,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 14%, rgba(240,225,200,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 9%, rgba(240,225,200,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 20%, rgba(240,225,200,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 18%, rgba(240,225,200,0.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 8% 24%, rgba(240,225,200,0.35) 0%, transparent 100%);
+  animation:starTwinkle 8s ease-in-out infinite alternate;
+}
+@keyframes starTwinkle{ 0%{opacity:0.55;} 100%{opacity:1;} }
+
+.moon{
+  position:absolute; top:11%; right:16%;
+  width:56px; height:56px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #f6e6c4, #c69a5c);
+  box-shadow:0 0 40px rgba(200,160,80,0.35), 0 0 90px rgba(200,160,80,0.14);
+  animation:moonFloat 12s ease-in-out infinite;
+}
+@keyframes moonFloat{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
+.mote{
+  position:absolute; bottom:-10px;
+  width:3px; height:3px; border-radius:50%;
+  background:var(--gold-bright); opacity:0;
+  animation:moteRise linear infinite;
+}
+@keyframes moteRise{
+  0%{ transform:translateY(0); opacity:0; }
+  10%{ opacity:0.5; }
+  90%{ opacity:0.2; }
+  100%{ transform:translateY(-70vh); opacity:0; }
+}
+
+.skyline{ position:absolute; bottom:0; left:0; right:0; width:100%; z-index:2; }
+.atmos{
+  position:absolute; bottom:18%; left:68%; transform:translateX(-50%);
+  width:38%; height:260px;
+  background:radial-gradient(ellipse, rgba(201,164,99,0.22) 0%, transparent 70%);
+  pointer-events:none;
+}
+.atmos-2{
+  position:absolute; bottom:12%; left:26%; transform:translateX(-50%);
+  width:30%; height:180px;
+  background:radial-gradient(ellipse, rgba(140,161,126,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative; z-index:10; text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+}
+.hero-eyebrow{
+  font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.5rem; opacity:0;
+  animation:fadeUp 1.2s 0.6s forwards;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.6rem, 7vw, 5.6rem);
+  font-weight:700; line-height:1.05; color:var(--fog);
+  letter-spacing:-0.01em; opacity:0;
+  animation:fadeUp 1.4s 0.9s forwards;
+}
+.hero-title em{
+  display:block; font-style:italic; font-weight:300;
+  color:var(--gold-bright); font-size:0.85em; margin-top:0.2em;
+}
+.straight-dash{
+  display:inline-block; font-style:normal; font-family:'DM Sans',sans-serif;
+  transform:skewX(0deg);
+}
+
+/* ---------- VIDEO SCENE ---------- */
+#scene-video{
+  background:linear-gradient(180deg, #110d08 0%, var(--deep) 100%);
+  padding:12vh 8vw; flex-direction:column;
+}
+.video-eyebrow{
+  font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.2rem; text-align:center;
+}
+.video-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.9rem,4vw,3rem); font-weight:700; color:var(--fog);
+  text-align:center; margin-bottom:2.4rem; line-height:1.25;
+}
+.video-title em{ font-style:italic; font-weight:300; color:var(--gold-bright); }
+.video-wrapper{
+  position:relative; width:100%; max-width:860px; margin:0 auto;
+  aspect-ratio:16/9; border-radius:18px; overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 26px 90px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  background:linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+}
+.video-wrapper iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; }
+.yt-fallback-btn{
+  display:flex; width:fit-content; margin:1.6rem auto 0;
+  align-items:center; justify-content:center;
+  padding:0.75rem 1.4rem; border-radius:999px;
+  text-decoration:none; color:var(--deep2);
+  font-family:'DM Sans',sans-serif; font-size:0.8rem; letter-spacing:0.04em;
+  background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+  box-shadow:0 10px 30px rgba(201,164,99,0.2);
+  transition:transform 0.3s ease;
+}
+.yt-fallback-btn:hover{ transform:translateY(-2px); }
+@media (max-width:700px){
+  #scene-video{ padding:9vh 5vw; }
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; font-style:italic; color:var(--mist);
+  margin-top:2rem; letter-spacing:0.02em; max-width:560px;
+  opacity:0; animation:fadeUp 1.2s 1.4s forwards;
+}
+.hero-scroll-hint{
+  position:absolute; bottom:3rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+  opacity:0; animation:fadeIn 1s 2.4s forwards; z-index:10;
+}
+.scroll-line{
+  width:1px; height:46px;
+  background:linear-gradient(180deg, transparent, var(--gold));
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+.scroll-text{
+  font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--mist); writing-mode:vertical-rl; transform:rotate(180deg);
+}
+@keyframes scrollPulse{ 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+
+/* ---------- THESIS SCENES ---------- */
+.scene-thesis{
+  background:linear-gradient(180deg, var(--deep) 0%, #110d08 100%);
+  padding:12vh 8vw;
+}
+.thesis-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14rem, 30vw, 26rem);
+  color:rgba(201,164,99,0.045);
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  pointer-events:none; user-select:none; white-space:nowrap; z-index:0;
+}
+.thesis-eyebrow{
+  font-size:0.75rem; letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:2rem; position:relative; z-index:2;
+}
+.thesis-body{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem, 3vw, 2.5rem);
+  font-weight:300; line-height:1.5; color:var(--fog);
+  max-width:880px; position:relative; z-index:2;
+}
+.thesis-body strong{ font-weight:700; color:var(--gold-bright); }
+.thesis-quote{
+  margin-top:3rem; padding-left:1.8rem;
+  border-left:1px solid var(--gold);
+  position:relative; z-index:2; max-width:720px;
+}
+.thesis-quote p{
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1.15rem; color:var(--mist); line-height:1.7;
+}
+.thesis-quote cite{
+  display:block; margin-top:0.7rem; font-size:0.68rem;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-style:normal;
+}
+
+/* diagram used in case-study thesis scene */
+.flow-diagram{
+  margin-top:3rem; display:flex; flex-direction:column; gap:1rem;
+  position:relative; z-index:2; max-width:640px;
+}
+.flow-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.flow-node{
+  font-family:'DM Sans',sans-serif; font-size:0.85rem;
+  padding:10px 16px; border-radius:2px; letter-spacing:0.02em;
+}
+.flow-node.dn{ background:rgba(201,164,99,0.1); color:var(--gold-bright); border:1px solid var(--line); }
+.flow-node.high{ background:var(--brick-soft); color:var(--brick); border:1px solid rgba(181,106,76,0.3); }
+.flow-node.poor{ background:rgba(255,255,255,0.03); color:var(--mist); border:1px dashed rgba(200,190,170,0.25); }
+.flow-arrow{ color:var(--mist); font-size:1.1rem; }
+.flow-caption{ font-size:0.85rem; color:var(--mist); opacity:0.7; font-style:italic; }
+
+/* ---------- VIEW PANELS (Hai mô hình) ---------- */
+#scene-views{
+  background:#0d0b07; padding:12vh 8vw; min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  transition:background 0.6s ease;
+}
+#scene-views.theme-1{ background:linear-gradient(180deg, #150e0a 0%, #1c110b 100%); }
+#scene-views.theme-2{ background:linear-gradient(180deg, #0d100c 0%, #101710 100%); }
+#scene-views.theme-both{ background:linear-gradient(180deg, #14100c 0%, #10130f 100%); }
+
+.views-eyebrow{
+  font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.2rem; text-align:center;
+}
+.views-title{
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.4vw,2.6rem);
+  font-weight:700; color:var(--fog); text-align:center; margin-bottom:3rem;
+}
+.views-split{
+  display:grid; grid-template-columns:1fr 56px 1fr;
+  gap:0; align-items:stretch; margin-top:1rem;
+}
+@media (max-width:820px){
+  .views-split{ grid-template-columns:1fr; gap:0; }
+  .views-vs{ padding:0.8rem 0; }
+}
+.view-panel{
+  padding:3.2rem 2.6rem; background:rgba(255,255,255,0.015);
+  border:1px solid var(--line); position:relative; cursor:pointer;
+  transition:all 0.5s;
+}
+.view-panel:hover{ background:rgba(201,164,99,0.05); border-color:rgba(201,164,99,0.35); }
+.view-label{
+  font-size:0.78rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.4rem; display:flex; align-items:center; gap:0.7rem;
+}
+.view-label::after{ content:''; flex:1; height:1px; background:rgba(201,164,99,0.2); }
+.toggle-icon{ margin-left:0.3rem; font-size:1.1rem; transition:transform 0.3s ease; color:var(--gold); }
+.view-panel.expanded .toggle-icon{ transform:rotate(45deg); }
+.view-statement{
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1.15rem,1.8vw,1.5rem);
+  font-style:italic; color:var(--fog); line-height:1.55; margin-bottom:0;
+  transition:margin-bottom 0.4s ease;
+}
+.view-panel.expanded .view-statement{ margin-bottom:1.8rem; }
+.view-details{
+  max-height:0; opacity:0; overflow:hidden; margin-top:0;
+  transition:max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s cubic-bezier(.4,0,.2,1), margin-top 0.4s cubic-bezier(.4,0,.2,1);
+}
+.view-panel.expanded .view-details{ max-height:1200px; opacity:1; margin-top:1.2rem; }
+.view-detail-item{ font-size:0.92rem; color:var(--mist); line-height:1.7; margin-bottom:0.9rem; }
+.view-detail-item:last-child{ margin-bottom:0; }
+.view-detail-item strong{ color:var(--gold); font-weight:600; }
+.view-panel.tbcn .view-label{ color:var(--brick); }
+.view-panel.tbcn:hover{ border-color:rgba(181,106,76,0.4); background:rgba(181,106,76,0.05); }
+.view-panel.tbcn .toggle-icon{ color:var(--brick); }
+.view-panel.xhcn .view-label{ color:var(--sage); }
+.view-panel.xhcn:hover{ border-color:rgba(140,161,126,0.4); background:rgba(140,161,126,0.05); }
+.view-panel.xhcn .toggle-icon{ color:var(--sage); }
+.views-vs{
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--gold);
+  letter-spacing:0.1em; background:rgba(201,164,99,0.03);
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+@media (max-width:820px){ .views-vs{ border:1px solid var(--line); } }
+
+/* ---------- ANALYSIS CARDS (4 công cụ) ---------- */
+#scene-analysis{ background:linear-gradient(180deg, #0a0808 0%, #0d0b07 100%); padding:12vh 6vw; }
+#scene-analysis.theme-1{ background:linear-gradient(180deg,#100c07 0%,#150f09 100%); }
+#scene-analysis.theme-2{ background:linear-gradient(180deg,#0e0c06 0%,#141008 100%); }
+#scene-analysis.theme-3{ background:linear-gradient(180deg,#0b0d0a 0%,#0f120e 100%); }
+#scene-analysis.theme-4{ background:linear-gradient(180deg,#0b0d0a 0%,#0e130e 100%); }
+.analysis-header{ text-align:center; }
+.analysis-eyebrow{
+  font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.2rem;
+}
+.analysis-title{
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,3vw,2.3rem);
+  font-weight:700; color:var(--fog); line-height:1.2;
+}
+.analysis-container{
+  display:flex; flex-direction:row; align-items:center; justify-content:center;
+  width:100%; position:relative; margin-top:5vh; min-height:560px;
+}
+.analysis-container.has-active{ justify-content:space-between; }
+.analysis-detail-pane{
+  flex:0 0 0%; max-width:0; opacity:0; pointer-events:none; overflow:hidden;
+  min-height:400px; transform:translateX(-30px);
+  transition:flex-basis 0.6s ease-in-out, max-width 0.6s ease-in-out, opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  border-right:1px solid var(--line); padding-right:0;
+}
+.analysis-container.has-active .analysis-detail-pane{
+  flex:0 0 42%; max-width:42%; opacity:1; transform:translateX(0);
+  pointer-events:all; padding-right:2rem; overflow:visible;
+}
+.analysis-detail-pane.detail-fade-out{ opacity:0 !important; transform:translateY(10px); transition:opacity 0.2s, transform 0.2s; }
+.analysis-detail-content{ display:flex; flex-direction:column; gap:1.2rem; }
+.detail-num{ font-family:'Cormorant Garamond',serif; font-size:4rem; color:var(--gold); line-height:1; opacity:0.6; }
+.detail-title{ font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:700; color:var(--fog); line-height:1.3; }
+.detail-body{ font-size:0.96rem; line-height:1.7; color:var(--mist); }
+.detail-body strong{ color:var(--gold); font-weight:600; }
+.detail-result{
+  margin-top:0.4rem; padding:0.9rem 1.1rem; font-size:0.9rem; color:var(--sage);
+  background:var(--sage-soft); border-left:2px solid var(--sage);
+}
+.analysis-grid{
+  display:flex; flex-direction:row; align-items:center; justify-content:center;
+  gap:16px; flex-wrap:nowrap; min-width:fit-content; flex-shrink:0; flex-grow:0;
+  transition:transform 0.6s ease-in-out;
+}
+.analysis-container.has-active .analysis-grid{ transform:translateX(clamp(0px,2vw,40px)); }
+.analysis-card{
+  width:220px; height:320px; min-height:320px; max-height:320px;
+  flex:0 0 220px; box-sizing:border-box;
+  background:rgba(255,255,255,0.02); border:1px solid var(--line);
+  padding:1.4rem 1rem; position:relative; overflow:hidden;
+  transition:all 0.5s ease-in-out; cursor:pointer;
+  display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:0.8rem;
+}
+.analysis-card::before{
+  content:''; position:absolute; top:0; left:0; width:100%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:scaleX(0); transition:transform 0.6s;
+}
+.analysis-card:hover::before{ transform:scaleX(1); }
+.analysis-card:hover{ background:rgba(201,164,99,0.05); border-color:rgba(201,164,99,0.3); }
+.analysis-card.state-a{ border-color:var(--gold); background:rgba(201,164,99,0.09); box-shadow:0 10px 30px rgba(201,164,99,0.15); opacity:1; }
+.analysis-card.state-b{ border-color:rgba(201,164,99,0.25); opacity:1; }
+.analysis-card.state-c{ border-color:rgba(201,164,99,0.06); opacity:0.4; }
+.analysis-card:focus{ outline:2px solid rgba(201,164,99,0.95); outline-offset:8px; }
+.card-icon{ color:var(--gold); opacity:0.85; }
+.card-num{ font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--mist); letter-spacing:0.15em; }
+.card-title{ font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:700; color:var(--fog); line-height:1.3; }
+.card-body{ display:none; }
+
+@media (max-width:900px){
+  .analysis-container{ flex-direction:column; min-height:auto; }
+  .analysis-container.has-active{ justify-content:flex-start; }
+  .analysis-grid{ flex-wrap:wrap; gap:12px; }
+  .analysis-card{ width:150px; height:190px; min-height:190px; max-height:190px; flex:0 0 150px; padding:1rem 0.7rem; }
+  .analysis-detail-pane{ order:2; max-width:100% !important; flex-basis:100% !important; border-right:none; padding-right:0 !important; margin-top:1.5rem; }
+  .analysis-container.has-active .analysis-detail-pane{ padding-right:0; }
+}
+
+/* ---------- GLASS CARD + HOVER LIFT (hiệu ứng mở thẻ nâng cấp) ---------- */
+.analysis-card, .view-panel{
+  border-radius:22px !important;
+  background:linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.012)) !important;
+  box-shadow:0 22px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter:blur(8px);
+  will-change:transform, opacity;
+  transition:transform 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
+}
+.analysis-card:hover, .view-panel:hover{
+  transform:translateY(-6px);
+  box-shadow:0 30px 90px rgba(0,0,0,0.45), 0 0 40px rgba(201,164,99,0.12), inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+/* Nền phát sáng theo từng công cụ khi mở thẻ */
+#scene-analysis{ position:relative; isolation:isolate; transition:background 0.65s ease; }
+#scene-analysis::before{
+  content:''; position:absolute; inset:-18%; z-index:0; pointer-events:none;
+  opacity:0.6; filter:blur(34px); transition:background 0.65s ease, opacity 0.65s ease;
+}
+#scene-analysis > *{ position:relative; z-index:1; }
+
+#scene-analysis.theme-1{ background:radial-gradient(circle at 18% 18%, rgba(201,164,99,0.16), transparent 34%), radial-gradient(circle at 82% 72%, rgba(140,90,40,0.18), transparent 36%), linear-gradient(180deg,#100c07 0%,#0a0806 100%) !important; }
+#scene-analysis.theme-1::before{ background:radial-gradient(circle at 22% 26%, rgba(232,212,168,0.26), transparent 34%); }
+#scene-analysis.theme-1 .analysis-card.state-a{ border-color:rgba(232,212,168,0.75) !important; box-shadow:0 22px 70px rgba(201,164,99,0.18), inset 0 1px 0 rgba(255,255,255,0.08) !important; }
+
+#scene-analysis.theme-2{ background:radial-gradient(circle at 20% 20%, rgba(181,106,76,0.16), transparent 34%), radial-gradient(circle at 78% 70%, rgba(120,60,40,0.16), transparent 38%), linear-gradient(180deg,#120a08 0%,#0a0706 100%) !important; }
+#scene-analysis.theme-2::before{ background:radial-gradient(circle at 30% 24%, rgba(214,140,110,0.28), transparent 34%); }
+#scene-analysis.theme-2 .analysis-card.state-a{ border-color:rgba(214,140,110,0.75) !important; box-shadow:0 22px 70px rgba(181,106,76,0.18), inset 0 1px 0 rgba(255,255,255,0.08) !important; }
+
+#scene-analysis.theme-3{ background:radial-gradient(circle at 22% 18%, rgba(140,161,126,0.15), transparent 34%), radial-gradient(circle at 80% 76%, rgba(90,120,80,0.14), transparent 38%), linear-gradient(180deg,#0a0d0a 0%,#080a08 100%) !important; }
+#scene-analysis.theme-3::before{ background:radial-gradient(circle at 24% 26%, rgba(180,210,165,0.24), transparent 34%); }
+#scene-analysis.theme-3 .analysis-card.state-a{ border-color:rgba(180,210,165,0.72) !important; box-shadow:0 22px 70px rgba(140,161,126,0.16), inset 0 1px 0 rgba(255,255,255,0.08) !important; }
+
+#scene-analysis.theme-4{ background:radial-gradient(circle at 18% 22%, rgba(126,161,201,0.15), transparent 34%), radial-gradient(circle at 82% 74%, rgba(90,110,150,0.14), transparent 38%), linear-gradient(180deg,#080a0f 0%,#07080b 100%) !important; }
+#scene-analysis.theme-4::before{ background:radial-gradient(circle at 26% 24%, rgba(160,195,230,0.24), transparent 34%); }
+#scene-analysis.theme-4 .analysis-card.state-a{ border-color:rgba(160,195,230,0.72) !important; box-shadow:0 22px 70px rgba(126,161,201,0.16), inset 0 1px 0 rgba(255,255,255,0.08) !important; }
+
+/* Nền phát sáng theo mô hình khi mở panel (Hai mô hình) */
+#scene-views{ position:relative; isolation:isolate; }
+#scene-views.theme-1{ background:radial-gradient(circle at 20% 20%, rgba(181,106,76,0.14), transparent 34%), linear-gradient(180deg,#150e0a 0%,#1c110b 100%) !important; }
+#scene-views.theme-1 .view-panel.expanded{ border-color:rgba(214,140,110,0.6) !important; box-shadow:0 22px 70px rgba(181,106,76,0.16), inset 0 1px 0 rgba(255,255,255,0.06); }
+#scene-views.theme-2{ background:radial-gradient(circle at 80% 20%, rgba(140,161,126,0.14), transparent 34%), linear-gradient(180deg,#0d100c 0%,#101710 100%) !important; }
+#scene-views.theme-2 .view-panel.expanded{ border-color:rgba(180,210,165,0.6) !important; box-shadow:0 22px 70px rgba(140,161,126,0.16), inset 0 1px 0 rgba(255,255,255,0.06); }
+#scene-views.theme-both{ background:radial-gradient(circle at 30% 20%, rgba(181,106,76,0.12), transparent 34%), radial-gradient(circle at 70% 20%, rgba(140,161,126,0.12), transparent 34%), linear-gradient(180deg,#14100c 0%,#10130f 100%) !important; }
+#scene-views.theme-both .view-panel.tbcn.expanded{ border-color:rgba(214,140,110,0.6) !important; }
+#scene-views.theme-both .view-panel.xhcn.expanded{ border-color:rgba(180,210,165,0.6) !important; }
+
+/* ---------- CONCLUSION ---------- */
+#scene-conclusion{
+  background:var(--deep); min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; padding:8vh 8vw; position:relative;
+}
+#scene-conclusion::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent 0%, rgba(201,164,99,0.18) 14%, rgba(232,212,168,0.95) 50%, rgba(201,164,99,0.18) 86%, transparent 100%);
+  box-shadow:0 0 18px rgba(201,164,99,0.45), 0 0 42px rgba(232,212,168,0.18);
+  pointer-events:none;
+}
+.conclusion-glow{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:560px; height:560px;
+  background:radial-gradient(circle, rgba(201,164,99,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.conclusion-content{ position:relative; z-index:2; max-width:720px; }
+.conclusion-eyebrow{ font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:1.8rem; }
+.conclusion-title{
+  font-family:'Cormorant Garamond',serif; font-size:clamp(2.1rem,5vw,4rem);
+  font-weight:700; color:var(--fog); line-height:1.15; margin-bottom:2rem;
+}
+.conclusion-title em{ font-style:italic; font-weight:300; color:var(--gold); }
+.conclusion-body{ font-size:1.02rem; line-height:1.85; color:var(--mist); max-width:600px; margin:0 auto; }
+.conclusion-divider{ width:56px; height:1px; background:var(--gold); margin:2.6rem auto; opacity:0.6; }
+.conclusion-tag{ font-size:0.75rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--mist); opacity:0.55; }
+
+/* ---------- PREMIUM TITLE SHIMMER + GLOW ---------- */
+.hero-title, .analysis-title, .conclusion-title, .views-title, .video-title{
+  position:relative;
+  background:linear-gradient(105deg, var(--fog) 0%, var(--gold-bright) 32%, #ffffff 50%, var(--gold) 72%, var(--fog) 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  animation:titleShimmer 8s ease-in-out infinite;
+  filter:drop-shadow(0 14px 34px rgba(0,0,0,0.4));
+}
+.hero-title{
+  animation:fadeUp 1.4s 0.9s forwards, titleShimmer 8s ease-in-out infinite;
+}
+.hero-title em, .analysis-title em, .conclusion-title em, .views-title em, .video-title em{
+  color:var(--gold-bright); -webkit-text-fill-color:var(--gold-bright);
+  text-shadow:0 0 22px rgba(232,212,168,0.28), 0 14px 32px rgba(0,0,0,0.4);
+}
+@keyframes titleShimmer{ 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+.hero-title::after, .analysis-title::after, .conclusion-title::after, .views-title::after, .video-title::after{
+  content:attr(data-glow); position:absolute; inset:0; z-index:-1;
+  color:rgba(232,212,168,0.22); -webkit-text-fill-color:rgba(232,212,168,0.22);
+  filter:blur(18px); opacity:0.55; pointer-events:none;
+}
+.hero-eyebrow, .hero-sub, .analysis-eyebrow, .views-eyebrow, .conclusion-eyebrow, .video-eyebrow{
+  text-shadow:0 0 16px rgba(232,212,168,0.2), 0 10px 26px rgba(0,0,0,0.4);
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-title, .analysis-title, .conclusion-title, .views-title, .video-title{ animation:none !important; }
+}
+
+/* ---------- REVEAL ---------- */
+.reveal{ opacity:0; transform:translateY(36px); transition:opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94); }
+.reveal.visible{ opacity:1; transform:translateY(0); }
+.reveal-delay-1{ transition-delay:0.1s; }
+.reveal-delay-2{ transition-delay:0.25s; }
+.reveal-delay-3{ transition-delay:0.4s; }
+
+@keyframes fadeUp{ from{opacity:0; transform:translateY(28px);} to{opacity:1; transform:translateY(0);} }
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+
+@media (prefers-reduced-motion: reduce){
+  #progress,.mote,.stars,.moon{ animation:none !important; }
+  *{ transition:none !important; }
+}
+
+/* FIX CUỐI: hết chồng chữ, hết mồ côi chữ, thêm hình minh họa */
+.hero-title::after{
+  content:none !important;
+  display:none !important;
+}
+.hero-content{
+  width:min(1220px, 94vw) !important;
+  gap:0 !important;
+}
+.hero-title{
+  width:100% !important;
+  max-width:1180px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:0.28em !important;
+  font-size:clamp(2.4rem, 5.1vw, 5rem) !important;
+  line-height:1.06 !important;
+  text-wrap:balance;
+}
+.hero-title .hero-main,
+.hero-title .hero-second{
+  display:block !important;
+  white-space:nowrap !important;
+}
+.hero-title .hero-second{
+  font-style:italic !important;
+  font-weight:300 !important;
+  font-size:0.62em !important;
+  color:var(--gold-bright) !important;
+  -webkit-text-fill-color:var(--gold-bright) !important;
+  line-height:1.12 !important;
+}
+.hero-title em{ display:none !important; }
+.hero-illustration{
+  width:min(520px, 45vw);
+  margin:1.15rem auto 0.45rem;
+  opacity:0;
+  animation:fadeUp 1.1s 1.15s forwards;
+  pointer-events:none;
+}
+.hero-illustration svg{ width:100%; height:auto; display:block; }
+.hero-sub{
+  max-width:980px !important;
+  white-space:nowrap !important;
+  margin-top:0.8rem !important;
+}
+.no-break{ white-space:nowrap; }
+@media (max-width:900px){
+  .hero-title{ font-size:clamp(2rem, 8.6vw, 3.9rem) !important; }
+  .hero-title .hero-main,
+  .hero-title .hero-second{ white-space:normal !important; }
+  .hero-illustration{ width:min(420px, 70vw); margin-top:0.9rem; }
+  .hero-sub{ max-width:86vw !important; white-space:normal !important; }
+  .no-break{ white-space:normal; }
+}
+
+
+/* ===== Nâng cấp theo yêu cầu: thẻ đẹp hơn, chấm scroll, phím lên/xuống ===== */
+html{ scroll-behavior:smooth; }
+body::-webkit-scrollbar{ width:0; height:0; }
+body{ scrollbar-width:none; }
+
+#section-dots{
+  position:fixed;
+  right:22px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:250;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:12px 9px;
+  border-radius:999px;
+  background:rgba(12,10,7,0.28);
+  border:1px solid rgba(201,164,99,0.14);
+  backdrop-filter:blur(10px);
+  box-shadow:0 18px 42px rgba(0,0,0,0.34);
+}
+.section-dot{
+  width:8px;
+  height:8px;
+  border:0;
+  border-radius:50%;
+  cursor:pointer;
+  background:rgba(200,190,170,0.42);
+  position:relative;
+  transition:transform .32s ease, background .32s ease, box-shadow .32s ease, opacity .32s ease;
+}
+.section-dot::after{
+  content:attr(data-label);
+  position:absolute;
+  right:22px;
+  top:50%;
+  transform:translateY(-50%) translateX(8px);
+  opacity:0;
+  pointer-events:none;
+  white-space:nowrap;
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold-bright);
+  background:rgba(12,10,7,.72);
+  border:1px solid rgba(201,164,99,.18);
+  padding:7px 10px;
+  border-radius:999px;
+  transition:opacity .25s ease, transform .25s ease;
+}
+.section-dot:hover::after,
+.section-dot.active::after{ opacity:1; transform:translateY(-50%) translateX(0); }
+.section-dot:hover,
+.section-dot.active{
+  background:var(--gold-bright);
+  transform:scale(1.55);
+  box-shadow:0 0 0 6px rgba(201,164,99,.13), 0 0 24px rgba(232,212,168,.38);
+}
+@media (max-width:760px){ #section-dots{ right:10px; gap:10px; padding:10px 7px; } .section-dot::after{display:none;} }
+
+/* Khi chưa lướt tới phần 4 công cụ: thẻ nằm yên, không mở sẵn */
+#scene-analysis .analysis-card{
+  opacity:0;
+  transform:translateY(34px) scale(.94) rotateX(8deg);
+  transform-origin:center;
+  transition:
+    opacity .7s cubic-bezier(.2,.8,.2,1),
+    transform .7s cubic-bezier(.2,.8,.2,1),
+    border-color .35s ease,
+    background .35s ease,
+    box-shadow .35s ease,
+    filter .35s ease;
+  isolation:isolate;
+}
+#scene-analysis.analysis-ready .analysis-card{
+  opacity:1;
+  transform:translateY(0) scale(1) rotateX(0deg);
+}
+#scene-analysis.analysis-ready .analysis-card:nth-child(1){ transition-delay:.05s; }
+#scene-analysis.analysis-ready .analysis-card:nth-child(2){ transition-delay:.15s; }
+#scene-analysis.analysis-ready .analysis-card:nth-child(3){ transition-delay:.25s; }
+#scene-analysis.analysis-ready .analysis-card:nth-child(4){ transition-delay:.35s; }
+.analysis-card::after{
+  content:'';
+  position:absolute;
+  inset:-1px;
+  z-index:-1;
+  border-radius:inherit;
+  opacity:0;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(232,212,168,.22), transparent 28%),
+    linear-gradient(135deg, rgba(232,212,168,.16), rgba(255,255,255,.02), rgba(201,164,99,.12));
+  transition:opacity .35s ease;
+}
+.analysis-card:hover::after,
+.analysis-card.state-a::after{ opacity:1; }
+.analysis-card:hover{
+  transform:translateY(-10px) scale(1.025) !important;
+  border-color:rgba(232,212,168,.48) !important;
+  box-shadow:0 30px 90px rgba(0,0,0,.46), 0 0 42px rgba(201,164,99,.16), inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+.analysis-card.state-a{
+  transform:translateY(-12px) scale(1.04) !important;
+  border-color:rgba(232,212,168,.82) !important;
+  background:linear-gradient(145deg, rgba(201,164,99,.16), rgba(255,255,255,.028)) !important;
+  box-shadow:0 34px 100px rgba(0,0,0,.50), 0 0 55px rgba(232,212,168,.22), inset 0 1px 0 rgba(255,255,255,.1) !important;
+}
+.analysis-card.state-b{ transform:translateY(-2px) scale(.98) !important; opacity:.72 !important; filter:saturate(.88); }
+.analysis-card.state-c{ transform:scale(.94) !important; opacity:.34 !important; filter:saturate(.62) blur(.15px); }
+.analysis-card .card-num{
+  font-size:1rem;
+  letter-spacing:.28em;
+  color:var(--gold-bright);
+  text-shadow:0 0 18px rgba(232,212,168,.18);
+}
+.analysis-card .card-title{
+  font-size:1.28rem;
+  letter-spacing:.02em;
+}
+.analysis-detail-pane{
+  border-right:1px solid rgba(232,212,168,.18) !important;
+}
+.analysis-container.has-active .analysis-detail-pane{
+  background:linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.012));
+  border:1px solid rgba(201,164,99,.15);
+  border-radius:24px;
+  padding:2rem !important;
+  box-shadow:0 24px 80px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.detail-fade-in{ animation:detailPop .46s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes detailPop{
+  from{ opacity:0; transform:translateY(18px) scale(.98); filter:blur(5px); }
+  to{ opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  #scene-analysis .analysis-card,
+  #scene-analysis.analysis-ready .analysis-card,
+  .detail-fade-in{ animation:none !important; transition:none !important; transform:none !important; opacity:1 !important; }
+}
+
+
+/* ===== Tinh chỉnh layout + bỏ thanh cuộn mặc định + giao thoa mềm ===== */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar{
+  width:0 !important;
+  height:0 !important;
+  display:none !important;
+}
+html, body{
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+#progress{ display:none !important; }
+
+/* Thanh vàng giao thoa giữa phần trước và Case study */
+.case-study-scene{
+  background:
+    radial-gradient(circle at 50% 0%, rgba(232,212,168,0.10), transparent 34%),
+    linear-gradient(180deg, #100b07 0%, #130d08 42%, #0f0b08 100%) !important;
+  padding-top:14vh !important;
+  isolation:isolate;
+}
+.case-study-scene::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(760px, 72vw);
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg, transparent, rgba(201,164,99,.32), rgba(255,232,190,.96), rgba(201,164,99,.32), transparent);
+  box-shadow:0 0 18px rgba(232,212,168,.42), 0 0 54px rgba(201,164,99,.16);
+  z-index:4;
+  pointer-events:none;
+}
+.case-study-scene::after{
+  content:'';
+  position:absolute;
+  top:-110px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(900px, 80vw);
+  height:220px;
+  background:radial-gradient(ellipse, rgba(201,164,99,.12), transparent 68%);
+  pointer-events:none;
+  z-index:1;
+}
+.case-study-scene > *{ position:relative; z-index:2; }
+.case-study-scene .thesis-number{
+  opacity:.72;
+  transform:translate(-50%,-50%) scale(.92);
+}
+.case-study-scene .thesis-eyebrow{
+  margin-bottom:1.45rem !important;
+  padding:0.62rem 1rem;
+  border:1px solid rgba(201,164,99,.18);
+  border-radius:999px;
+  background:rgba(255,255,255,.018);
+  box-shadow:0 14px 46px rgba(0,0,0,.22);
+}
+
+.case-problem{
+  max-width:980px !important;
+  font-size:clamp(1.35rem, 2.35vw, 2.15rem) !important;
+  line-height:1.48 !important;
+  display:grid;
+  gap:.62rem;
+  padding:2rem 2.2rem;
+  border:1px solid rgba(201,164,99,.14);
+  border-left:2px solid rgba(232,212,168,.72);
+  border-radius:26px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012)),
+    radial-gradient(circle at 8% 10%, rgba(232,212,168,.08), transparent 34%);
+  box-shadow:0 26px 90px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.05);
+  text-wrap:balance;
+}
+.case-problem span{
+  display:block;
+  color:rgba(242,236,225,.92);
+}
+.case-problem strong{
+  color:var(--gold-bright) !important;
+  font-weight:700 !important;
+  text-shadow:0 0 18px rgba(232,212,168,.18);
+}
+.case-warning{
+  margin-top:.55rem;
+  padding-top:.9rem;
+  border-top:1px solid rgba(201,164,99,.16);
+  color:var(--fog) !important;
+}
+.case-study-scene .flow-diagram{
+  max-width:980px !important;
+  width:min(980px, 92vw);
+  margin-top:2.1rem !important;
+  padding:1.35rem 1.5rem;
+  border-radius:22px;
+  background:rgba(255,255,255,.018);
+  border:1px solid rgba(201,164,99,.12);
+  box-shadow:0 20px 70px rgba(0,0,0,.24);
+}
+.case-study-scene .flow-row{
+  justify-content:center;
+}
+.case-study-scene .flow-caption{
+  max-width:820px;
+  margin:.6rem auto 0;
+  text-align:center;
+  line-height:1.72;
+  font-size:.92rem;
+  opacity:.82;
+}
+@media (max-width:760px){
+  .case-study-scene{ padding-top:12vh !important; }
+  .case-problem{ padding:1.35rem 1.25rem; border-radius:20px; font-size:1.28rem !important; }
+  .case-study-scene .flow-diagram{ padding:1rem; }
+  .case-study-scene .flow-row{ justify-content:flex-start; }
+  #section-dots{ right:8px; }
+}
+
+
+/* ===== REDESIGN CASE STUDY: 2 cột chuyên nghiệp ===== */
+#scene-thesis-2.case-study-pro{
+  min-height:100svh !important;
+  justify-content:center !important;
+  align-items:center !important;
+  padding:clamp(4.8rem, 8vh, 6rem) clamp(1.25rem, 6vw, 6rem) !important;
+  overflow:hidden !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(232,212,168,.10), transparent 34%),
+    radial-gradient(circle at 18% 72%, rgba(181,106,76,.08), transparent 32%),
+    linear-gradient(180deg,#100b07 0%,#130d08 48%,#0d0907 100%) !important;
+}
+#scene-thesis-2.case-study-pro::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(780px,72vw);
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(201,164,99,.28),rgba(255,232,190,.96),rgba(201,164,99,.28),transparent);
+  box-shadow:0 0 18px rgba(232,212,168,.38),0 0 52px rgba(201,164,99,.14);
+  pointer-events:none;
+  z-index:3;
+}
+#scene-thesis-2.case-study-pro .thesis-number{
+  top:50% !important;
+  opacity:.18 !important;
+  transform:translate(-50%,-50%) scale(.82) !important;
+}
+.case-shell{
+  width:min(1180px,100%);
+  position:relative;
+  z-index:5;
+}
+.case-kicker{
+  width:fit-content;
+  margin:0 auto 1.35rem;
+  padding:.62rem 1.15rem;
+  border-radius:999px;
+  border:1px solid rgba(201,164,99,.22);
+  background:rgba(255,255,255,.018);
+  color:var(--gold-bright);
+  font-size:.74rem;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  box-shadow:0 16px 50px rgba(0,0,0,.24);
+}
+.case-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+  gap:1.35rem;
+  align-items:stretch;
+}
+.case-left,
+.case-right,
+.case-conclusion{
+  border:1px solid rgba(201,164,99,.15);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.012)),
+    radial-gradient(circle at 12% 10%,rgba(232,212,168,.06),transparent 34%);
+  border-radius:26px;
+  box-shadow:0 28px 90px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.case-left,
+.case-right{
+  padding:1.45rem;
+}
+.case-section-label{
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+}
+.case-section-label::after{
+  content:'';
+  height:1px;
+  flex:1;
+  background:linear-gradient(90deg,rgba(201,164,99,.32),transparent);
+}
+.case-mini-card{
+  padding:1.05rem 1.15rem;
+  border-radius:18px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(201,164,99,.12);
+  margin-bottom:.82rem;
+}
+.case-mini-card:last-child{ margin-bottom:0; }
+.case-mini-card.warning{
+  border-left:2px solid rgba(232,212,168,.75);
+  background:linear-gradient(145deg,rgba(201,164,99,.075),rgba(255,255,255,.018));
+}
+.case-mini-title{
+  font-family:'Cormorant Garamond',serif;
+  color:var(--gold-bright);
+  font-size:1.22rem;
+  font-weight:700;
+  margin-bottom:.35rem;
+}
+.case-mini-card p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.08rem,1.65vw,1.5rem);
+  line-height:1.45;
+  color:rgba(242,236,225,.92);
+  margin:.18rem 0;
+}
+.case-mini-card strong{
+  color:var(--gold-bright);
+  text-shadow:0 0 18px rgba(232,212,168,.16);
+}
+.case-right{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.capital-flow{
+  display:grid;
+  grid-template-columns:1fr 48px 1.25fr;
+  align-items:center;
+  gap:.75rem;
+  padding:1.05rem;
+  border-radius:20px;
+  margin-bottom:.9rem;
+  border:1px solid rgba(201,164,99,.13);
+  background:rgba(255,255,255,.022);
+}
+.capital-flow:last-child{ margin-bottom:0; }
+.capital-flow.good{
+  border-color:rgba(181,106,76,.28);
+  background:linear-gradient(145deg,rgba(181,106,76,.08),rgba(255,255,255,.016));
+}
+.capital-flow.blocked{
+  border-style:dashed;
+  opacity:.88;
+  background:linear-gradient(145deg,rgba(255,255,255,.018),rgba(255,255,255,.008));
+}
+.flow-source,.flow-target span{
+  font-family:'DM Sans',sans-serif;
+  font-size:.92rem;
+  letter-spacing:.06em;
+  color:var(--fog);
+}
+.flow-source{
+  padding:.72rem .8rem;
+  border-radius:14px;
+  text-align:center;
+  background:rgba(201,164,99,.09);
+  border:1px solid rgba(201,164,99,.14);
+}
+.flow-symbol{
+  text-align:center;
+  font-size:1.55rem;
+  color:var(--gold-bright);
+  text-shadow:0 0 20px rgba(232,212,168,.22);
+}
+.flow-target{
+  padding:.72rem .8rem;
+  border-radius:14px;
+  background:rgba(255,255,255,.026);
+  border:1px solid rgba(201,164,99,.12);
+}
+.flow-target span{ display:block; }
+.flow-target small{
+  display:block;
+  margin-top:.25rem;
+  color:var(--mist);
+  font-size:.72rem;
+  line-height:1.4;
+}
+.case-conclusion{
+  margin-top:1.1rem;
+  padding:1.05rem 1.25rem;
+  color:var(--mist);
+  line-height:1.65;
+  font-size:.96rem;
+  text-align:center;
+}
+.case-conclusion strong{
+  color:var(--gold-bright);
+}
+@media (max-width:980px){
+  .case-layout{ grid-template-columns:1fr; }
+  .case-right{ justify-content:flex-start; }
+}
+@media (max-width:700px){
+  #scene-thesis-2.case-study-pro{
+    padding:4.2rem 1.1rem 3.6rem !important;
+  }
+  .case-kicker{ letter-spacing:.22em; font-size:.66rem; }
+  .case-left,.case-right{ padding:1rem; border-radius:22px; }
+  .capital-flow{ grid-template-columns:1fr; text-align:center; gap:.55rem; }
+  .flow-symbol{ transform:rotate(90deg); }
+}
+
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="section-dots" aria-label="Điều hướng từng phần"></div>
+
+<nav>
+  <div class="nav-logo">KTTT · NOXH</div>
+  <div class="nav-tag">Kinh tế chính trị Mác – Lênin</div>
+</nav>
+
+<!-- SCENE 1: HERO -->
+<section class="scene" id="scene-hero">
+  <div class="sky"></div>
+  <div class="stars"></div>
+  <div class="moon"></div>
+  <div class="atmos"></div>
+  <div class="atmos-2"></div>
+  <div id="motes"></div>
+
+  <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- khu nhà ở xã hội: thấp, tối, ít cửa sổ sáng -->
+    <rect x="40" y="200" width="70" height="100" fill="#2a2318"/>
+    <rect x="120" y="180" width="60" height="120" fill="#241f16"/>
+    <rect x="190" y="215" width="55" height="85" fill="#2a2318"/>
+    <rect x="255" y="195" width="65" height="105" fill="#241f16"/>
+    <g fill="#4a4130" opacity="0.6">
+      <rect x="52" y="215" width="8" height="8"/><rect x="70" y="230" width="8" height="8"/>
+      <rect x="132" y="200" width="8" height="8"/><rect x="150" y="220" width="8" height="8"/>
+      <rect x="200" y="230" width="8" height="8"/><rect x="266" y="215" width="8" height="8"/>
+    </g>
+    <!-- trung tâm: cán cân đứng giữa, khoảng trống -->
+    <!-- khu chung cư cao cấp: cao, sáng đèn vàng -->
+    <rect x="760" y="120" width="70" height="180" fill="#3a2c18"/>
+    <rect x="840" y="70" width="80" height="230" fill="#3f3018"/>
+    <rect x="930" y="140" width="60" height="160" fill="#362919"/>
+    <rect x="1000" y="95" width="75" height="205" fill="#3f3018"/>
+    <rect x="1085" y="150" width="60" height="150" fill="#362919"/>
+    <g fill="#e8c98a">
+      <rect x="772" y="140" width="9" height="9"/><rect x="795" y="160" width="9" height="9"/><rect x="772" y="180" width="9" height="9"/>
+      <rect x="855" y="90" width="9" height="9"/><rect x="880" y="115" width="9" height="9"/><rect x="855" y="140" width="9" height="9"/><rect x="880" y="165" width="9" height="9"/>
+      <rect x="945" y="160" width="9" height="9"/><rect x="965" y="185" width="9" height="9"/>
+      <rect x="1015" y="115" width="9" height="9"/><rect x="1040" y="140" width="9" height="9"/><rect x="1015" y="165" width="9" height="9"/>
+      <rect x="1100" y="170" width="9" height="9"/><rect x="1122" y="195" width="9" height="9"/>
+    </g>
+    <rect x="0" y="298" width="1200" height="2" fill="#c9a463" opacity="0.15"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kinh tế chính trị Mác – Lênin</div>
+    <h1 class="hero-title">
+      <span class="hero-main">Ai xây nhà cho người nghèo?</span>
+      <span class="hero-second">Không phải thị trường mà là lựa chọn</span>
+    </h1>
+    <div class="hero-illustration" aria-hidden="true">
+      <svg viewBox="0 0 520 150" role="img" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="houseGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f3deb0"/>
+            <stop offset="1" stop-color="#b78b47"/>
+          </linearGradient>
+          <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g opacity="0.9" filter="url(#softGlow)">
+          <path d="M90 95 L130 62 L170 95 V128 H90 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463" stroke-width="2"/>
+          <rect x="118" y="101" width="20" height="27" fill="#e8d4a8" opacity="0.75"/>
+          <rect x="147" y="105" width="11" height="11" fill="#e8d4a8" opacity="0.75"/>
+          <path d="M350 102 L392 68 L434 102 V128 H350 Z" fill="rgba(201,164,99,0.18)" stroke="#c9a463" stroke-width="2"/>
+          <rect x="379" y="103" width="22" height="25" fill="#e8d4a8" opacity="0.75"/>
+          <rect x="410" y="107" width="11" height="11" fill="#e8d4a8" opacity="0.75"/>
+          <line x1="260" y1="32" x2="260" y2="126" stroke="#c9a463" stroke-width="2"/>
+          <line x1="205" y1="58" x2="315" y2="58" stroke="#c9a463" stroke-width="2"/>
+          <line x1="215" y1="58" x2="195" y2="95" stroke="#c9a463" stroke-width="1.5"/>
+          <line x1="215" y1="58" x2="235" y2="95" stroke="#c9a463" stroke-width="1.5"/>
+          <path d="M178 95 H252 Q245 118 215 118 Q185 118 178 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463" stroke-width="1.5"/>
+          <line x1="305" y1="58" x2="285" y2="95" stroke="#c9a463" stroke-width="1.5"/>
+          <line x1="305" y1="58" x2="325" y2="95" stroke="#c9a463" stroke-width="1.5"/>
+          <path d="M268 95 H342 Q335 118 305 118 Q275 118 268 95Z" fill="rgba(232,212,168,0.14)" stroke="#c9a463" stroke-width="1.5"/>
+          <rect x="238" y="126" width="44" height="4" rx="2" fill="#c9a463" opacity="0.85"/>
+        </g>
+      </svg>
+    </div>
+    <p class="hero-sub">Hai mô hình kinh tế thị trường, và một bài toán nhà ở — <span class="no-break">nơi lý luận gặp thực tiễn.</span></p>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <div class="scroll-text">Cuộn xuống</div>
+  </div>
+</section>
+
+<!-- SCENE 2: CƠ SỞ CHUNG -->
+<section class="scene scene-thesis" id="scene-thesis-1">
+  <div class="thesis-number">I</div>
+  <div class="thesis-eyebrow reveal">Phần I - Cơ sở chung</div>
+  <p class="thesis-body reveal reveal-delay-1">Kinh tế thị trường là nền kinh tế vận hành theo cơ chế thị trường - nền kinh tế hàng hoá phát triển cao, nơi mọi quan hệ sản xuất và trao đổi đều thông qua thị trường, chịu sự điều tiết của <strong>quy luật giá trị, cung – cầu và cạnh tranh</strong>.</p>
+  <div class="thesis-quote reveal reveal-delay-2">
+    <p>Cả hai mô hình - tư bản chủ nghĩa và định hướng xã hội chủ nghĩa - đều là kinh tế thị trường. Chúng khác nhau ở chế độ sở hữu, mục tiêu theo đuổi và vai trò của Nhà nước.</p>
+    <cite>Nguyên lý chung</cite>
+  </div>
+</section>
+
+<!-- SCENE 3: HAI MÔ HÌNH -->
+<section class="scene" id="scene-views">
+  <div class="views-eyebrow reveal">Định nghĩa đối chiếu</div>
+  <h2 class="views-title reveal reveal-delay-1" data-glow="Hai mô hình, hai điểm xuất phát">Hai mô hình, hai điểm xuất phát</h2>
+
+  <div class="views-split">
+    <div class="view-panel tbcn" data-panel="1" tabindex="0" role="button" aria-expanded="false">
+      <div class="view-label">KTTT Tư bản chủ nghĩa <span class="toggle-icon">+</span></div>
+      <p class="view-statement">Vận hành nhằm mục tiêu tối đa hoá lợi nhuận, dưới sự chi phối của giai cấp tư sản.</p>
+      <div class="view-details">
+        <div class="view-detail-item"><strong>Sở hữu:</strong> tư nhân tư bản chủ nghĩa về tư liệu sản xuất giữ vai trò chi phối.</div>
+        <div class="view-detail-item"><strong>Mục tiêu:</strong> tối đa hoá lợi nhuận, tích luỹ tư bản - giá trị thặng dư là động lực trung tâm.</div>
+        <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước tư sản can thiệp chủ yếu để khắc phục khuyết tật thị trường và duy trì ổn định chế độ.</div>
+        <div class="view-detail-item"><strong>Phân phối:</strong> theo sở hữu vốn và quy mô vốn góp, theo quy luật cung – cầu hàng hoá sức lao động.</div>
+        <div class="view-detail-item"><strong>Công bằng xã hội:</strong> là phương tiện để giữ ổn định chế độ, không phải mục tiêu tự thân.</div>
+      </div>
+    </div>
+
+    <div class="views-vs">VS</div>
+
+    <div class="view-panel xhcn" data-panel="2" tabindex="0" role="button" aria-expanded="false">
+      <div class="view-label">KTTT định hướng XHCN <span class="toggle-icon">+</span></div>
+      <p class="view-statement">Vận hành theo quy luật thị trường, đồng thời hướng tới một xã hội dân giàu, nước mạnh, công bằng, văn minh.</p>
+      <div class="view-details">
+        <div class="view-detail-item"><strong>Sở hữu:</strong> đa sở hữu; kinh tế nhà nước giữ vai trò chủ đạo, kinh tế tư nhân là động lực quan trọng.</div>
+        <div class="view-detail-item"><strong>Mục tiêu:</strong> dân giàu, nước mạnh, dân chủ, công bằng, văn minh; phát triển lực lượng sản xuất, xây dựng CNXH.</div>
+        <div class="view-detail-item"><strong>Vai trò Nhà nước:</strong> Nhà nước pháp quyền XHCN của dân, do dân, vì dân, dưới sự lãnh đạo của Đảng; điều tiết vì lợi ích nhân dân.</div>
+        <div class="view-detail-item"><strong>Phân phối:</strong> theo lao động, hiệu quả, đóng góp và phúc lợi xã hội.</div>
+        <div class="view-detail-item"><strong>Công bằng xã hội:</strong> vừa là phương tiện, vừa là mục tiêu phải từng bước hiện thực hoá.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE: VIDEO -->
+<section class="scene" id="scene-video">
+  <div class="video-eyebrow reveal">Thước phim ngắn</div>
+  <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực tế<br><em>về câu chuyện nhà ở xã hội</em></h2>
+  <div class="video-wrapper reveal reveal-delay-2">
+    <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&playsinline=1" loading="lazy"
+      title="YouTube video player" frameborder="0" allow="
+        accelerometer;
+        autoplay;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture;
+        web-share;
+      " referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <a class="yt-fallback-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Mở trên YouTube nếu video bị chặn</a>
+</section>
+
+<!-- SCENE 4: CASE STUDY - VẤN ĐỀ -->
+<section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2">
+  <div class="thesis-number">II</div>
+
+  <div class="case-shell reveal">
+    <div class="case-kicker">Phần II - Case study</div>
+
+    <div class="case-layout">
+      <div class="case-left">
+        <div class="case-section-label">Vấn đề cốt lõi</div>
+
+        <div class="case-mini-card">
+          <div class="case-mini-title">Mâu thuẫn</div>
+          <p>Doanh nghiệp cần <strong>lợi nhuận</strong>.</p>
+          <p>Người thu nhập thấp cần <strong>nhà ở giá rẻ</strong>.</p>
+        </div>
+
+        <div class="case-mini-card">
+          <div class="case-mini-title">Cơ chế thị trường</div>
+          <p>Theo quy luật tỷ suất lợi nhuận, vốn tự động chảy vào phân khúc chung cư cao cấp — nơi biên lợi nhuận cao, thu hồi vốn nhanh.</p>
+        </div>
+
+        <div class="case-mini-card warning">
+          <div class="case-mini-title">Hệ quả</div>
+          <p>Nếu để <strong>“bàn tay vô hình”</strong> tự điều tiết, người nghèo sẽ hoàn toàn bị gạt ra rìa.</p>
+        </div>
+      </div>
+
+      <div class="case-right">
+        <div class="case-section-label">Dòng vốn thị trường</div>
+
+        <div class="capital-flow good">
+          <div class="flow-source">Vốn đầu tư</div>
+          <div class="flow-symbol">→</div>
+          <div class="flow-target">
+            <span>Chung cư cao cấp</span>
+            <small>Lợi nhuận cao · thu hồi vốn nhanh</small>
+          </div>
+        </div>
+
+        <div class="capital-flow blocked">
+          <div class="flow-source">Vốn đầu tư</div>
+          <div class="flow-symbol">↛</div>
+          <div class="flow-target">
+            <span>Nhà ở xã hội</span>
+            <small>Cần hỗ trợ để có lợi nhuận hợp lý</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-conclusion">
+      <strong>Kết luận:</strong> Can thiệp là tất yếu, nhưng không nên bằng mệnh lệnh hành chính. Công cụ đúng là biến NOXH thành một cơ hội kinh doanh có lợi nhuận hợp lý cho doanh nghiệp.
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5: BỐN CÔNG CỤ -->
+<section class="scene" id="scene-analysis">
+  <div class="analysis-header">
+    <div class="analysis-eyebrow">Bốn công cụ điều tiết</div>
+    <h2 class="analysis-title" data-glow="Biến việc xây NOXH thành cơ hội kinh doanh hợp lý">Biến việc xây NOXH thành cơ hội kinh doanh hợp lý</h2>
+  </div>
+
+  <div class="analysis-container">
+    <div class="analysis-detail-pane"></div>
+    <div class="analysis-grid">
+
+      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="card-num">01</div>
+        <div class="card-title">Đất đai</div>
+        <div class="card-body">
+          <p><strong>Bản chất:</strong> Chi phí đất đai và địa tô chiếm tỷ trọng cực lớn trong giá nhà, đẩy giá vượt sức mua của người dân.</p>
+          <p><strong>Cơ chế:</strong> Nhà nước, với vai trò đại diện chủ sở hữu toàn dân về đất đai, miễn/giảm tiền sử dụng đất và bàn giao quỹ đất sạch cho doanh nghiệp.</p>
+          <p class="result"><strong>Kết quả:</strong> Giá nhà giảm còn 15–20 triệu/m², doanh nghiệp vẫn đảm bảo mức lời định mức khoảng 10% trên chi phí xây dựng.</p>
+        </div>
+      </div>
+
+      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="card-num">02</div>
+        <div class="card-title">Thuế</div>
+        <div class="card-body">
+          <p><strong>Ưu đãi NOXH:</strong> Miễn, giảm thuế VAT đầu ra và thuế thu nhập doanh nghiệp kịch khung cho chủ đầu tư.</p>
+          <p><strong>Siết cao cấp:</strong> Đánh thuế tài sản luỹ tiến hoặc thuế cao với bất động sản thứ hai và hành vi đầu cơ.</p>
+          <p class="result"><strong>Kết quả:</strong> Lợi nhuận kỳ vọng ở phân khúc cao cấp giảm, vốn tự dịch chuyển về nơi có lợi tức ổn định.</p>
+        </div>
+      </div>
+
+      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="card-num">03</div>
+        <div class="card-title">Tín dụng & lãi suất</div>
+        <div class="card-body">
+          <p><strong>Bản chất:</strong> Lãi suất vay ngân hàng là con dao hai lưỡi - vừa ăn mòn lợi nhuận doanh nghiệp, vừa đè nặng lên vai người mua nhà.</p>
+          <p><strong>Phía cung:</strong> Chủ đầu tư tiếp cận gói vay xây dựng dài hạn, lãi suất thấp, giảm chi phí tài chính suốt thi công.</p>
+          <p><strong>Phía cầu:</strong> Người thu nhập trung bình – thấp vay ưu đãi lãi suất cố định thấp, kỳ hạn 15–25 năm, qua Ngân hàng Chính sách xã hội.</p>
+          <p class="result"><strong>Kết quả:</strong> Doanh nghiệp hạ giá thành, nhu cầu tự nhiên chuyển thành sức mua thực tế; vốn xoay vòng liên tục.</p>
+        </div>
+      </div>
+
+      <div class="analysis-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="card-num">04</div>
+        <div class="card-title">Thể chế</div>
+        <div class="card-body">
+          <p><strong>Rủi ro:</strong> NOXH nhận ưu đãi rất lớn từ nguồn lực công, mang tính an sinh sâu sắc và dễ bị trục lợi kiểu "người giàu đi ô tô tranh suất mua của người nghèo".</p>
+          <p><strong>Minh bạch:</strong> Đối chiếu dữ liệu dân cư quốc gia, mã số thuế cá nhân và tình trạng sở hữu tài sản thực tế.</p>
+          <p><strong>Giám sát:</strong> Chế tài phạt nặng với hành vi đầu cơ, gom hàng hoặc bán lại suất mua trái phép.</p>
+          <p class="result"><strong>Kết quả:</strong> Nhà ở đến đúng tay người cần, giữ nguyên vẹn mục tiêu an sinh của chính sách.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6: KẾT LUẬN -->
+<section class="scene" id="scene-conclusion">
+  <div class="conclusion-glow"></div>
+  <div class="conclusion-content">
+    <div class="conclusion-eyebrow reveal">Kết luận</div>
+    <h2 class="conclusion-title reveal reveal-delay-1" data-glow="Cân bằng không đến từ cực đoan, mà từ công cụ đúng.">Cân bằng không đến từ cực đoan,<br><em>mà từ công cụ đúng.</em></h2>
+    <p class="conclusion-body reveal reveal-delay-2">Sự bế tắc của Nhà ở xã hội không thể giải quyết bằng tư duy thị trường cực đoan, cũng không thể giải quyết bằng mệnh lệnh áp đặt. Nhà nước điều tiết vĩ mô bằng công cụ kinh tế - đất đai, thuế, tín dụng, thể chế - chính là chìa khoá để hài hoà lợi ích giữa doanh nghiệp và người dân, hướng tới một nền kinh tế thị trường bền vững, công bằng và văn minh.</p>
+    <div class="conclusion-divider"></div>
+    <div class="conclusion-tag">Kinh tế chính trị Mác – Lênin · KTTT & Nhà ở xã hội</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+  const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Tab') document.body.classList.add('keyboard-navigation');
+  });
+  document.addEventListener('mousedown', function(){
+    document.body.classList.remove('keyboard-navigation');
+  });
+
+  // ---------- Progress bar ----------
+  const progress = $('#progress');
+  function onScroll(){
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const p = docHeight > 0 ? Math.min(scrollTop/docHeight, 1) : 0;
+    if(progress) progress.style.width = (p*100)+'%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // ---------- Floating motes ----------
+  const motesContainer = $('#motes');
+  if(motesContainer && !prefersReducedMotion){
+    for(let i=0;i<14;i++){
+      const m = document.createElement('span');
+      m.className = 'mote';
+      m.style.left = (Math.random()*100)+'%';
+      m.style.animationDuration = (10 + Math.random()*14)+'s';
+      m.style.animationDelay = (Math.random()*10)+'s';
+      motesContainer.appendChild(m);
+    }
+  }
+
+  // ---------- Reveal on scroll ----------
+  const revealEls = $$('.reveal');
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.15, rootMargin:'0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // ---------- View panels (Hai mô hình) - độc lập ----------
+  const viewsSection = $('#scene-views');
+  const viewPanels = $$('.view-panel');
+
+  function updateViewsTheme(){
+    const opened = viewPanels.map(function(p, i){ return p.classList.contains('expanded') ? i : -1; }).filter(function(i){ return i>=0; });
+    viewsSection.classList.remove('has-active','theme-1','theme-2','theme-both');
+    if(opened.length === 0) return;
+    viewsSection.classList.add('has-active');
+    if(opened.length === 2) viewsSection.classList.add('theme-both');
+    else viewsSection.classList.add('theme-'+(opened[0]+1));
+  }
+
+  viewPanels.forEach(function(panel){
+    function toggle(){
+      const willOpen = !panel.classList.contains('expanded');
+      panel.classList.toggle('expanded', willOpen);
+      panel.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      updateViewsTheme();
+    }
+    panel.addEventListener('click', toggle);
+    panel.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+  });
+
+  // ---------- Analysis cards (4 công cụ) ----------
+  const analysisSection = $('#scene-analysis');
+  const analysisContainer = $('.analysis-container');
+  const analysisGrid = $('.analysis-grid');
+  const analysisCards = $$('.analysis-card');
+  const detailPane = $('.analysis-detail-pane');
+  let fadeTimeout = null;
+
+  function resetAnalysis(){
+    analysisContainer.classList.remove('has-active');
+    analysisSection.classList.remove('theme-1','theme-2','theme-3','theme-4');
+    analysisCards.forEach(function(card){
+      card.classList.remove('state-a','state-b','state-c');
+      card.setAttribute('aria-expanded','false');
+    });
+    if(detailPane){
+      detailPane.classList.add('detail-fade-out');
+      clearTimeout(fadeTimeout);
+      fadeTimeout = setTimeout(function(){
+        detailPane.innerHTML = '';
+        detailPane.classList.remove('detail-fade-out');
+      }, 200);
+    }
+  }
+
+  function openCard(clickedCard){
+    const clickedIndex = analysisCards.indexOf(clickedCard);
+    if(clickedIndex < 0) return;
+    if(clickedCard.classList.contains('state-a')) return resetAnalysis();
+
+    analysisSection.classList.remove('theme-1','theme-2','theme-3','theme-4');
+    analysisSection.classList.add('theme-'+(clickedIndex+1));
+
+    analysisCards.forEach(function(card, index){
+      card.classList.remove('state-a','state-b','state-c');
+      const diff = (index - clickedIndex + analysisCards.length) % analysisCards.length;
+      card.classList.add(diff === 0 ? 'state-a' : diff === 1 ? 'state-b' : 'state-c');
+      card.setAttribute('aria-expanded', diff === 0 ? 'true' : 'false');
+    });
+
+    analysisContainer.classList.add('has-active');
+    if(detailPane){
+      clearTimeout(fadeTimeout);
+      detailPane.classList.add('detail-fade-out');
+      fadeTimeout = setTimeout(function(){
+        const number = $('.card-num', clickedCard) ? $('.card-num', clickedCard).textContent : '0'+(clickedIndex+1);
+        const title = $('.card-title', clickedCard) ? $('.card-title', clickedCard).innerHTML : '';
+        const bodyParas = $$('.card-body p', clickedCard).map(function(p){ return '<p class="detail-body">'+p.innerHTML+'</p>'; }).join('');
+        detailPane.innerHTML = '<div class="analysis-detail-content detail-fade-in"><div class="detail-num">'+number+'</div><h3 class="detail-title">'+title+'</h3>'+bodyParas+'</div>';
+        detailPane.classList.remove('detail-fade-out');
+      }, 200);
+    }
+  }
+
+  analysisGrid.addEventListener('click', function(e){
+    const clickedCard = e.target.closest('.analysis-card');
+    if(!clickedCard) return;
+    openCard(clickedCard);
+  });
+
+  analysisCards.forEach(function(card){
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openCard(card); }
+    });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ resetAnalysis(); }
+  });
+
+
+  // ---------- Chỉ cho thẻ xuất hiện khi lướt tới phần 4 công cụ ----------
+  if(analysisSection && 'IntersectionObserver' in window){
+    const analysisObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && entry.intersectionRatio >= 0.45){
+          analysisSection.classList.add('analysis-ready');
+          analysisObserver.unobserve(analysisSection);
+        }
+      });
+    }, { threshold:[0.25,0.45,0.65] });
+    analysisObserver.observe(analysisSection);
+  } else if(analysisSection){
+    analysisSection.classList.add('analysis-ready');
+  }
+
+  // ---------- Thanh chấm bên phải + phím mũi tên chuyển từng phần ----------
+  const sectionDots = $('#section-dots');
+  const pageSections = $$('.scene').filter(function(sec){ return sec.id; });
+  const sectionLabels = {
+    'scene-hero':'Mở đầu',
+    'scene-thesis-1':'Cơ sở',
+    'scene-views':'Mô hình',
+    'scene-video':'Video',
+    'scene-thesis-2':'Vấn đề',
+    'scene-analysis':'Công cụ',
+    'scene-conclusion':'Kết luận'
+  };
+  let currentSectionIndex = 0;
+
+  function scrollToSection(index){
+    if(index < 0 || index >= pageSections.length) return;
+    currentSectionIndex = index;
+    pageSections[index].scrollIntoView({ behavior:'smooth', block:'start' });
+    updateSectionDots(index);
+  }
+
+  function updateSectionDots(activeIndex){
+    if(!sectionDots) return;
+    $$('.section-dot', sectionDots).forEach(function(dot, i){
+      dot.classList.toggle('active', i === activeIndex);
+      dot.setAttribute('aria-current', i === activeIndex ? 'true' : 'false');
+    });
+  }
+
+  if(sectionDots && pageSections.length){
+    sectionDots.innerHTML = pageSections.map(function(sec, i){
+      const label = sectionLabels[sec.id] || ('Phần '+(i+1));
+      return '<button class="section-dot" type="button" data-index="'+i+'" data-label="'+label+'" aria-label="'+label+'"></button>';
+    }).join('');
+
+    sectionDots.addEventListener('click', function(e){
+      const dot = e.target.closest('.section-dot');
+      if(!dot) return;
+      scrollToSection(parseInt(dot.getAttribute('data-index'), 10));
+    });
+
+    const sectionObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          const idx = pageSections.indexOf(entry.target);
+          if(idx >= 0){
+            currentSectionIndex = idx;
+            updateSectionDots(idx);
+          }
+        }
+      });
+    }, { threshold:0.55 });
+    pageSections.forEach(function(sec){ sectionObserver.observe(sec); });
+    updateSectionDots(0);
+  }
+
+  document.addEventListener('keydown', function(e){
+    const tag = document.activeElement && document.activeElement.tagName ? document.activeElement.tagName.toLowerCase() : '';
+    if(tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      scrollToSection(Math.min(currentSectionIndex + 1, pageSections.length - 1));
+    }
+    if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      scrollToSection(Math.max(currentSectionIndex - 1, 0));
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
