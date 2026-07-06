@@ -48,6 +48,8 @@
   // ---------- Progress bar & Navbar scroll class ----------
   const progress = $('#progress');
   const navbarEl = $('nav');
+  const navGoldDivider = $('.nav-gold-divider');
+
   function onScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -61,9 +63,44 @@
         navbarEl.classList.remove('nav-scrolled');
       }
     }
+
+    // ---------- Nav gold divider scroll-driven fade ----------
+    // As the on-page gold divider between sections approaches the header,
+    // the nav divider fades out, then fades back in on the next section.
+    if (navGoldDivider && navbarEl) {
+      const navHeight = navbarEl.getBoundingClientRect().height;
+      const pageDividers = $$('.gold-divider:not(.nav-gold-divider)');
+      const FADE_RANGE = 45; // reduced from 160px so it only fades when very close to transitioning
+
+      let closestDist = Infinity;
+      pageDividers.forEach(function (div) {
+        const rect = div.getBoundingClientRect();
+        // Distance from the divider line to the bottom of the nav
+        const dist = Math.abs(rect.top - navHeight);
+        if (dist < closestDist) closestDist = dist;
+      });
+
+      let targetOpacity;
+      if (scrollTop <= 50) {
+        targetOpacity = 0;
+      } else {
+        if (closestDist < FADE_RANGE) {
+          // Linearly fade: fully opaque at FADE_RANGE px away, almost invisible at 0 px
+          targetOpacity = closestDist / FADE_RANGE;
+        } else {
+          targetOpacity = 1;
+        }
+        // Keep a minimum glow so it's never fully gone when scrolled
+        targetOpacity = Math.max(0.08, targetOpacity);
+      }
+      navGoldDivider.style.opacity = targetOpacity;
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+
+
 
   // ---------- Floating motes ----------
   const motesContainer = $('#motes');
@@ -343,7 +380,7 @@
     const sectionTop = analysisSection.getBoundingClientRect().top + window.scrollY;
     const viewportH = window.innerHeight;
     const containerH = analysisContainer.offsetHeight;
-    
+
     // 12vh padding-top là 12% của chiều cao viewport
     const paddingTop = 12 * viewportH / 100;
     const centeringOffset = Math.max(paddingTop, (viewportH - containerH) / 2);
@@ -425,17 +462,44 @@
     }, 2200);
   }
 
+  function getScrolledNavHeight() {
+    if (!navbarEl) return 0;
+    const hasScrolledClass = navbarEl.classList.contains('nav-scrolled');
+    if (!hasScrolledClass) {
+      navbarEl.classList.add('nav-scrolled');
+    }
+    const height = navbarEl.getBoundingClientRect().height;
+    if (!hasScrolledClass) {
+      navbarEl.classList.remove('nav-scrolled');
+    }
+    return height;
+  }
+
+  function getSectionScrollTarget(index) {
+    if (index === 0) return 0;
+    const section = pageSections[index];
+    if (!section) return 0;
+    const navH = getScrolledNavHeight();
+
+    // Find preceding gold divider
+    let prevSibling = section.previousElementSibling;
+    while (prevSibling && !prevSibling.classList.contains('gold-divider')) {
+      prevSibling = prevSibling.previousElementSibling;
+    }
+
+    if (prevSibling && prevSibling.classList.contains('gold-divider')) {
+      // Position so gold divider aligns exactly with the nav bottom
+      return prevSibling.getBoundingClientRect().top + window.scrollY - navH;
+    }
+    return section.getBoundingClientRect().top + window.scrollY - navH;
+  }
+
   function scrollToSection(index) {
     if (index < 0 || index >= pageSections.length) return;
     currentSectionIndex = index;
 
-    // Tính chiều cao navbar thực tế để offset
-    const nav = document.querySelector('nav');
-    const navH = nav ? nav.getBoundingClientRect().height : 0;
-    const target = pageSections[index];
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - navH;
-
-    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    const targetTop = getSectionScrollTarget(index);
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 
     updateSectionDots(index);
     if (lastSectionIndex !== index) {
@@ -546,45 +610,76 @@
       }
     };
 
+    function activateState(stateKey) {
+      const state = states[stateKey];
+      if (!state) return;
+
+      const targetBtn = btns.find(b => b.getAttribute('data-state') === stateKey);
+      if (targetBtn) {
+        btns.forEach(b => b.classList.remove('active'));
+        targetBtn.classList.add('active');
+      }
+
+      if (beam) {
+        beam.style.setProperty('--beam-rot', state.rot);
+        // Đồng bộ góc quay cho đĩa cân luôn treo thẳng đứng
+        const pans = $$('.scale-pan', beam);
+        pans.forEach(function (pan) {
+          pan.style.transform = 'rotate(calc(-1 * ' + state.rot + '))';
+        });
+      }
+
+      const infoCard = $('.balance-info-card', balanceWidget);
+      if (infoCard) {
+        infoCard.style.opacity = '0';
+        infoCard.style.transform = 'translateY(8px)';
+        setTimeout(function () {
+          if (title) title.textContent = state.title;
+          if (desc) desc.textContent = state.desc;
+          if (profitVal) {
+            profitVal.textContent = state.profit;
+            profitVal.className = 'metric-val val-profit ' + state.profitClass;
+          }
+          if (welfareVal) {
+            welfareVal.textContent = state.welfare;
+            welfareVal.className = 'metric-val val-welfare ' + state.welfareClass;
+          }
+          infoCard.style.opacity = '1';
+          infoCard.style.transform = 'translateY(0)';
+        }, 200);
+      }
+    }
+
+    // Auto-cycle the scale states until interacted
+    const stateKeys = ['free', 'force', 'macro'];
+    let currentScaleIndex = 0;
+    let autoPlayInterval = null;
+
+    function startAutoPlay() {
+      autoPlayInterval = setInterval(function () {
+        currentScaleIndex = (currentScaleIndex + 1) % stateKeys.length;
+        activateState(stateKeys[currentScaleIndex]);
+      }, 4000);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    }
+
     btns.forEach(function (btn) {
       btn.addEventListener('click', function () {
+        stopAutoPlay(); // Stop cycling permanently when clicked
         const stateKey = btn.getAttribute('data-state');
-        const state = states[stateKey];
-        if (!state) return;
-
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        if (beam) {
-          beam.style.setProperty('--beam-rot', state.rot);
-          // Đồng bộ góc quay cho đĩa cân luôn treo thẳng đứng
-          const pans = $$('.scale-pan', beam);
-          pans.forEach(function (pan) {
-            pan.style.transform = 'rotate(calc(-1 * ' + state.rot + '))';
-          });
-        }
-
-        const infoCard = $('.balance-info-card', balanceWidget);
-        if (infoCard) {
-          infoCard.style.opacity = '0';
-          infoCard.style.transform = 'translateY(8px)';
-          setTimeout(function () {
-            if (title) title.textContent = state.title;
-            if (desc) desc.textContent = state.desc;
-            if (profitVal) {
-              profitVal.textContent = state.profit;
-              profitVal.className = 'metric-val val-profit ' + state.profitClass;
-            }
-            if (welfareVal) {
-              welfareVal.textContent = state.welfare;
-              welfareVal.className = 'metric-val val-welfare ' + state.welfareClass;
-            }
-            infoCard.style.opacity = '1';
-            infoCard.style.transform = 'translateY(0)';
-          }, 200);
-        }
+        currentScaleIndex = stateKeys.indexOf(stateKey);
+        activateState(stateKey);
       });
     });
+
+    // Start auto cycle on load
+    startAutoPlay();
   }
 
 })();
@@ -698,14 +793,14 @@ if (document.readyState === 'loading') {
 
     // Kích thước ngẫu nhiên 2–5px
     const size = 2 + Math.random() * 3.5;
-    p.style.width  = size + 'px';
+    p.style.width = size + 'px';
     p.style.height = size + 'px';
 
     // Vị trí ngẫu nhiên dọc theo chữ (x trong rect, y ±8px quanh đường baseline)
     const x = rect.left + Math.random() * rect.width;
-    const y = rect.top  + Math.random() * rect.height;
+    const y = rect.top + Math.random() * rect.height;
     p.style.left = x + 'px';
-    p.style.top  = y + 'px';
+    p.style.top = y + 'px';
 
     // Hướng bay ngẫu nhiên: lên trên, lệch trái/phải một chút
     const dx = (Math.random() - 0.5) * 28;
@@ -742,13 +837,13 @@ if (document.readyState === 'loading') {
 
     // Nhỏ hơn và mờ hơn hạt vàng — gợi sự "vô hình"
     const size = 1.5 + Math.random() * 3;
-    p.style.width  = size + 'px';
+    p.style.width = size + 'px';
     p.style.height = size + 'px';
 
     const x = rect.left + Math.random() * rect.width;
-    const y = rect.top  + Math.random() * rect.height;
+    const y = rect.top + Math.random() * rect.height;
     p.style.left = x + 'px';
-    p.style.top  = y + 'px';
+    p.style.top = y + 'px';
 
     // Bay theo mọi hướng — không chỉ lên, gợi sự phân tán hỗn loạn
     const dx = (Math.random() - 0.5) * 36;
