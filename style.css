@@ -2042,18 +2042,17 @@ nav.nav-scrolled {
   }
 }
 
-/* 🌫️ Ẩn hiện bằng JS — CSS chỉ giữ layout và màu */
+/* 🌫️ CSS giữ layout và màu hiển thị rõ ràng */
 .hero-second .hero-vohinh,
 .hero-title .hero-second .hero-vohinh {
   font-style: italic;
   font-weight: 500 !important;
-  /* Màu trắng nhạt, JS sẽ kiểm soát opacity */
+  /* Màu trắng nhạt */
   color: rgba(255, 255, 255, 0.75) !important;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
   display: inline;
   position: relative;
-  /* Bắt đầu ẩn — JS sẽ animate */
-  opacity: 0;
+  opacity: 1;
 }
 
 

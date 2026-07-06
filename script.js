@@ -590,7 +590,7 @@
 })();
 
 // ----- PRELOADER -----
-document.addEventListener('DOMContentLoaded', function () {
+function initPreloader() {
   const preloader = document.getElementById('preloader');
   const progressLine = document.getElementById('preloader-progress');
   const percentText = document.getElementById('preloader-percent');
@@ -606,17 +606,26 @@ document.addEventListener('DOMContentLoaded', function () {
         preloader.classList.add('preloader-hidden');
       }, 300);
     }
-    progressLine.style.width = percent + '%';
-    percentText.innerText = percent;
+    if (progressLine) progressLine.style.width = percent + '%';
+    if (percentText) percentText.innerText = percent;
   }, 30);
 
-  window.addEventListener('load', function () {
+  if (document.readyState === 'complete') {
     percent = 100;
-  });
-});
+  } else {
+    window.addEventListener('load', function () {
+      percent = 100;
+    });
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPreloader);
+} else {
+  initPreloader();
+}
 
 // ----- SCROLL DRIVEN CONCLUSION -----
-document.addEventListener('DOMContentLoaded', function () {
+function initConclusion() {
   const conclusionSection = document.getElementById('scene-conclusion');
   const conclusionText = document.getElementById('conclusion-text');
   if (!conclusionSection || !conclusionText) return;
@@ -666,7 +675,12 @@ document.addEventListener('DOMContentLoaded', function () {
       glow.style.setProperty('--glow-opacity', opacity);
     }
   });
-});
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initConclusion);
+} else {
+  initConclusion();
+}
 
 // ======================================================
 // ✨ HẠT VÀNG BAY QUANH "Bàn tay kiến tạo"
@@ -752,49 +766,3 @@ document.addEventListener('DOMContentLoaded', function () {
   // Thưa hơn hạt vàng một chút (170ms) — hiệu ứng nhẹ nhàng, bí ẩn hơn
   setInterval(spawnVohinhParticle, 170);
 })();
-
-// ======================================================
-// 🌫️ FORCE-HIDE "Bàn tay vô hình" ngay khi DOM sẵn sàng
-// ======================================================
-document.addEventListener('DOMContentLoaded', function () {
-  const vohinhEl = document.querySelector('.hero-vohinh');
-  if (vohinhEl) {
-    vohinhEl.style.setProperty('opacity', '0', 'important');
-  }
-});
-
-// ======================================================
-// 🌫️ ẨN HIỆN "Bàn tay vô hình" — JS opacity animator
-// ======================================================
-document.addEventListener('DOMContentLoaded', function () {
-  const el = document.querySelector('.hero-vohinh');
-  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const PERIOD   = 7000;  // chu kỳ 7s
-  const PEAK_AT  = 0.50;  // đỉnh sáng nhất ở giữa chu kỳ
-  const HALF_WIN = 0.10;  // cửa sổ ẩn hiện: ±10% = 20% tổng chu kỳ (~1.4s)
-  const MAX_OP   = 0.38;  // độ mờ tối đa khi "xuất hiện"
-
-  let startTime = null;
-
-  function animate(ts) {
-    if (!startTime) startTime = ts;
-    const t = ((ts - startTime) % PERIOD) / PERIOD; // 0 → 1
-
-    // Khoảng cách từ t đến PEAK_AT (xử lý wrap-around)
-    let dist = Math.abs(t - PEAK_AT);
-    if (dist > 0.5) dist = 1 - dist;
-
-    let opacity = 0;
-    if (dist < HALF_WIN) {
-      // sin curve: mượt mà xuất hiện và biến mất
-      const progress = (HALF_WIN - dist) / HALF_WIN; // 1 tại đỉnh, 0 ở rìa
-      opacity = Math.sin(progress * Math.PI / 2) * MAX_OP;
-    }
-
-    el.style.setProperty('opacity', opacity.toFixed(4), 'important');
-    requestAnimationFrame(animate);
-  }
-
-  requestAnimationFrame(animate);
-});
