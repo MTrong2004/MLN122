@@ -20,6 +20,7 @@
   const navTitles = {
     'scene-hero': '',
     'scene-thesis-1': 'Phần I - Cơ sở chung',
+    'scene-definitions': 'Định nghĩa hai mô hình',
     'scene-views': 'Hai mô hình đối chiếu',
     'scene-video': 'Góc nhìn thực tế',
     'scene-thesis-2': 'Phần II - Vấn đề cốt lõi',
@@ -35,6 +36,18 @@
       navCenterTitle.classList.add('visible');
     } else {
       navCenterTitle.classList.remove('visible');
+    }
+
+    const nav = $('nav');
+    if (nav) {
+      Array.from(nav.classList).forEach(function (cls) {
+        if (cls.startsWith('scene-')) {
+          nav.classList.remove(cls);
+        }
+      });
+      if (sectionId) {
+        nav.classList.add(sectionId);
+      }
     }
   }
 
@@ -443,6 +456,7 @@
   const sectionLabels = {
     'scene-hero': 'Mở đầu',
     'scene-thesis-1': 'Cơ sở',
+    'scene-definitions': 'Định nghĩa',
     'scene-views': 'Mô hình',
     'scene-video': 'Video',
     'scene-thesis-2': 'Vấn đề',
@@ -778,7 +792,7 @@ if (document.readyState === 'loading') {
 }
 
 // ======================================================
-// ✨ HẠT VÀNG BAY QUANH "Bàn tay kiến tạo"
+// ✨ HẠT VÀNG BAY QUANH "Bàn tay hữu hình"
 // ======================================================
 (function () {
   const kientaoEl = document.querySelector('.hero-kientao');
