@@ -119,7 +119,8 @@ nav .nav-gold-divider {
   box-shadow: 0 0 8px rgba(201, 164, 99, 0.2), 0 0 24px rgba(232, 212, 168, 0.08);
   overflow: visible;
   pointer-events: none;
-  opacity: 0; /* Hidden by default on Hero section */
+  opacity: 0;
+  /* Hidden by default on Hero section */
   transform-origin: center;
   transition: opacity 0.5s ease, background 0.8s ease;
   z-index: 200;
