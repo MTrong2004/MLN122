@@ -260,7 +260,7 @@
     <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực
       tế<br><em>về câu chuyện nhà ở xã hội</em></h2>
     <div class="video-wrapper reveal reveal-delay-2">
-      <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&playsinline=1"
+      <iframe src="https://www.youtube-nocookie.com/embed/1OV3FjgYM9o?rel=0&modestbranding=1&playsinline=1"
         loading="lazy" title="YouTube video player" frameborder="0" allow="
         accelerometer;
         autoplay;
@@ -271,7 +271,7 @@
         web-share;
       " referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-    <a class="yt-fallback-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"
+    <a class="yt-fallback-btn" href="https://www.youtube.com/watch?v=1OV3FjgYM9o" target="_blank"
       rel="noopener noreferrer">
       <svg class="yt-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"
         style="display:inline-block; vertical-align:middle; margin-right:6px;">
@@ -560,15 +560,23 @@
             <div class="balance-scale-wrapper">
               <div class="scale-base"></div>
               <div class="scale-pillar"></div>
-              <div class="scale-beam" style="--beam-rot: 12deg;">
+              <div class="scale-beam" style="--beam-rot: -12deg;">
                 <!-- Left pan: Lợi nhuận -->
-                <div class="scale-pan pan-left" style="transform: rotate(-12deg);">
-                  <div class="pan-strings"></div>
+                <div class="scale-pan pan-left" style="transform: rotate(12deg);">
+                  <svg class="pan-chains" viewBox="0 0 80 100">
+                    <line x1="40" y1="0" x2="15" y2="100" />
+                    <line x1="40" y1="0" x2="65" y2="100" />
+                    <line x1="40" y1="0" x2="40" y2="100" />
+                  </svg>
                   <div class="pan-plate">Lợi nhuận</div>
                 </div>
                 <!-- Right pan: An sinh -->
-                <div class="scale-pan pan-right" style="transform: rotate(-12deg);">
-                  <div class="pan-strings"></div>
+                <div class="scale-pan pan-right" style="transform: rotate(12deg);">
+                  <svg class="pan-chains" viewBox="0 0 80 100">
+                    <line x1="40" y1="0" x2="15" y2="100" />
+                    <line x1="40" y1="0" x2="65" y2="100" />
+                    <line x1="40" y1="0" x2="40" y2="100" />
+                  </svg>
                   <div class="pan-plate">An sinh</div>
                 </div>
               </div>
@@ -576,18 +584,26 @@
 
             <!-- Nội dung mô tả chi tiết -->
             <div class="balance-info-card">
-              <h4 class="info-card-title">Tự điều tiết cực đoan (Bàn tay vô hình)</h4>
-              <p class="info-card-desc">Khi để thị trường tự do hoàn toàn, dòng vốn chỉ chảy vào phân khúc chung cư cao
-                cấp để tối đa hóa lợi nhuận. Doanh nghiệp thu lợi lớn nhưng người thu nhập thấp hoàn toàn bị gạt ra
-                ngoài rìa xã hội, không thể tiếp cận nhà ở.</p>
+              <h4 class="info-card-title">Cơ chế thị trường tự&nbsp;do</h4>
+              <p class="info-card-desc">Thị trường tự do khiến dòng vốn chỉ tập trung vào phân khúc cao cấp để tối đa hóa lợi nhuận. Người thu nhập thấp bị gạt ra ngoài và không có cơ hội tiếp cận nhà ở.</p>
               <div class="info-card-metric">
-                <div class="metric-row">
-                  <span class="metric-label">Lợi nhuận doanh nghiệp:</span>
-                  <span class="metric-val val-profit val-high">Cực kỳ cao</span>
+                <div class="metric-wrapper">
+                  <div class="metric-row">
+                    <span class="metric-label">Lợi nhuận doanh nghiệp:</span>
+                    <span class="metric-val val-profit val-high">Cực kỳ cao</span>
+                  </div>
+                  <div class="metric-bar-bg">
+                    <div class="metric-bar-fill fill-profit val-high" style="width: 95%;"></div>
+                  </div>
                 </div>
-                <div class="metric-row">
-                  <span class="metric-label">Phúc lợi người dân:</span>
-                  <span class="metric-val val-welfare val-low">Gần như bằng 0</span>
+                <div class="metric-wrapper">
+                  <div class="metric-row">
+                    <span class="metric-label">Phúc lợi người dân:</span>
+                    <span class="metric-val val-welfare val-low">Bằng không</span>
+                  </div>
+                  <div class="metric-bar-bg">
+                    <div class="metric-bar-fill fill-welfare val-low" style="width: 5%;"></div>
+                  </div>
                 </div>
               </div>
             </div>

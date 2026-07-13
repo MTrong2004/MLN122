@@ -22,7 +22,7 @@
   // Bộ hàm rút gọn truy vấn DOM (viết theo kiểu jQuery tối giản)
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
-  
+
   // Kiểm tra nếu người dùng cài đặt giảm hiệu ứng chuyển động trong hệ điều hành (Accessibility)
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -72,7 +72,6 @@
   // ---------- THANH TIẾN TRÌNH & ĐỔI TRẠNG THÁI NAVBAR KHI CUỘN ----------
   const progress = $('#progress');
   const navbarEl = $('nav');
-  const navGoldDivider = $('.nav-gold-divider');
 
   function onScroll() {
     // Tính toán % cuộn trang hiện tại
@@ -88,38 +87,6 @@
       } else {
         navbarEl.classList.remove('nav-scrolled');
       }
-    }
-
-    // ---------- Nav gold divider scroll-driven fade ----------
-    // As the on-page gold divider between sections approaches the header,
-    // the nav divider fades out, then fades back in on the next section.
-    if (navGoldDivider && navbarEl) {
-      const navHeight = navbarEl.getBoundingClientRect().height;
-      const pageDividers = $$('.gold-divider:not(.nav-gold-divider)');
-      const FADE_RANGE = 45; // reduced from 160px so it only fades when very close to transitioning
-
-      let closestDist = Infinity;
-      pageDividers.forEach(function (div) {
-        const rect = div.getBoundingClientRect();
-        // Distance from the divider line to the bottom of the nav
-        const dist = Math.abs(rect.top - navHeight);
-        if (dist < closestDist) closestDist = dist;
-      });
-
-      let targetOpacity;
-      if (scrollTop <= 50) {
-        targetOpacity = 0;
-      } else {
-        if (closestDist < FADE_RANGE) {
-          // Linearly fade: fully opaque at FADE_RANGE px away, almost invisible at 0 px
-          targetOpacity = closestDist / FADE_RANGE;
-        } else {
-          targetOpacity = 1;
-        }
-        // Keep a minimum glow so it's never fully gone when scrolled
-        targetOpacity = Math.max(0.08, targetOpacity);
-      }
-      navGoldDivider.style.opacity = targetOpacity;
     }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -584,6 +551,47 @@
     updateNavbarTitle(pageSections[0].id);
   }
 
+  // Dynamic navbar gold divider fade-out/fade-in during scroll transitions
+  function updateNavbarDividerOpacity() {
+    const navbarEl = $('nav');
+    if (!navbarEl) return;
+    const divider = $('.nav-gold-divider', navbarEl);
+    if (!divider) return;
+
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    // Hide completely on Hero section
+    if (scrollTop <= 50) {
+      divider.style.opacity = '0';
+      return;
+    }
+
+    let minDistance = Infinity;
+    pageSections.forEach(function (sec, idx) {
+      const target = getSectionScrollTarget(idx);
+      const distance = Math.abs(scrollTop - target);
+      if (distance < minDistance) {
+        minDistance = distance;
+      }
+    });
+
+    const viewportHeight = window.innerHeight;
+    const maxDistance = viewportHeight * 0.5;
+    const startFadeDistance = viewportHeight * 0.4; // Fade starts only in the final 20% scroll zone around midpoint (80% scrolled)
+
+    let opacity = 1;
+    if (minDistance > startFadeDistance) {
+      const range = maxDistance - startFadeDistance;
+      opacity = Math.max(0, 1 - (minDistance - startFadeDistance) / range);
+    }
+
+    divider.style.opacity = opacity;
+  }
+
+  window.addEventListener('scroll', updateNavbarDividerOpacity, { passive: true });
+  updateNavbarDividerOpacity();
+
+
   document.addEventListener('keydown', function (e) {
     const tag = document.activeElement && document.activeElement.tagName ? document.activeElement.tagName.toLowerCase() : '';
     if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
@@ -615,31 +623,37 @@
 
     const states = {
       free: {
-        rot: '12deg',
-        title: 'Tự điều tiết cực đoan (Bàn tay vô hình)',
-        desc: 'Khi để thị trường tự do hoàn toàn, dòng vốn chỉ chảy vào phân khúc chung cư cao cấp để tối đa hóa lợi nhuận. Doanh nghiệp thu lợi lớn nhưng người thu nhập thấp hoàn toàn bị gạt ra ngoài rìa xã hội, không thể tiếp cận nhà ở.',
+        rot: '-12deg',
+        title: 'Cơ chế thị trường tự\u00a0do',
+        desc: 'Thị trường tự do khiến dòng vốn chỉ tập trung vào phân khúc cao cấp để tối đa hóa lợi nhuận. Người thu nhập thấp bị gạt ra ngoài và không có cơ hội tiếp cận nhà ở.',
         profit: 'Cực kỳ cao',
         profitClass: 'val-high',
-        welfare: 'Gần như bằng 0',
-        welfareClass: 'val-low'
+        profitPct: '95%',
+        welfare: 'Bằng không',
+        welfareClass: 'val-low',
+        welfarePct: '5%'
       },
       force: {
-        rot: '-12deg',
-        title: 'Mệnh lệnh áp đặt cực đoan (Hành chính)',
-        desc: 'Khi Nhà nước dùng mệnh lệnh hành chính ép giá thấp mà không hỗ trợ, doanh nghiệp bị triệt tiêu động lực vì không có lợi nhuận. Vốn lập tức rút khỏi thị trường, dẫn đến khan hiếm nguồn cung trầm trọng, không có dự án nào được xây dựng.',
-        profit: 'Không có / Âm',
+        rot: '12deg',
+        title: 'Mệnh lệnh hành chính áp\u00a0đặt',
+        desc: 'Nhà nước ép giá thấp bằng mệnh lệnh hành chính khiến doanh nghiệp mất lợi nhuận và triệt tiêu động lực. Nguồn cung lập tức đóng băng, không có dự án mới.',
+        profit: 'Không có',
         profitClass: 'val-low',
-        welfare: 'Không có nhà để mua',
-        welfareClass: 'val-low'
+        profitPct: '5%',
+        welfare: 'Không có nhà',
+        welfareClass: 'val-low',
+        welfarePct: '5%'
       },
       macro: {
         rot: '0deg',
-        title: 'Điều tiết vĩ mô (Định hướng XHCN)',
-        desc: 'Nhà nước không dùng mệnh lệnh hành chính mà điều tiết vĩ mô bằng 4 công cụ (Đất đai, Thuế, Tín dụng, Thể chế) để hướng dòng vốn. Doanh nghiệp đạt lợi nhuận định mức ổn định (~10%), người dân tiếp cận được NOXH giá rẻ thực chất.',
-        profit: 'Định mức ổn định (~10%)',
+        title: 'Điều tiết vĩ mô Nhà\u00a0nước',
+        desc: 'Nhà nước điều tiết bằng 4 công cụ (Đất, Thuế, Tín dụng, Thể chế) để định hướng dòng vốn. Doanh nghiệp có lãi hợp lý, người dân có nhà giá rẻ thực chất.',
+        profit: 'Ổn định (~10%)',
         profitClass: 'val-normal',
-        welfare: 'Bảo đảm an sinh thực chất',
-        welfareClass: 'val-normal'
+        profitPct: '55%',
+        welfare: 'An sinh bảo đảm',
+        welfareClass: 'val-normal',
+        welfarePct: '85%'
       }
     };
 
@@ -652,6 +666,10 @@
         btns.forEach(b => b.classList.remove('active'));
         targetBtn.classList.add('active');
       }
+
+      // Add dynamic class to the widget wrapper
+      balanceWidget.classList.remove('state-free', 'state-force', 'state-macro');
+      balanceWidget.classList.add('state-' + stateKey);
 
       if (beam) {
         beam.style.setProperty('--beam-rot', state.rot);
@@ -676,6 +694,16 @@
           if (welfareVal) {
             welfareVal.textContent = state.welfare;
             welfareVal.className = 'metric-val val-welfare ' + state.welfareClass;
+          }
+          const profitBar = $('.fill-profit', balanceWidget);
+          const welfareBar = $('.fill-welfare', balanceWidget);
+          if (profitBar) {
+            profitBar.style.width = state.profitPct;
+            profitBar.className = 'metric-bar-fill fill-profit ' + state.profitClass;
+          }
+          if (welfareBar) {
+            welfareBar.style.width = state.welfarePct;
+            welfareBar.className = 'metric-bar-fill fill-welfare ' + state.welfareClass;
           }
           infoCard.style.opacity = '1';
           infoCard.style.transform = 'translateY(0)';
@@ -771,7 +799,7 @@ function initConclusion() {
   const spans = conclusionText.querySelectorAll('.reveal-word');
   const glow = conclusionSection.querySelector('.conclusion-glow');
 
-  window.addEventListener('scroll', function () {
+  function handleScrollReveal() {
     const rect = conclusionSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
@@ -802,7 +830,10 @@ function initConclusion() {
       glow.style.setProperty('--glow-scale', scale);
       glow.style.setProperty('--glow-opacity', opacity);
     }
-  });
+  }
+
+  window.addEventListener('scroll', handleScrollReveal);
+  handleScrollReveal();
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initConclusion);
