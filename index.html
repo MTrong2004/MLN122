@@ -1,19 +1,27 @@
 <!--
-  [AI CONTEXT NOTE]
-  - Project: Interactive presentation on "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội" (Social Housing under Capitalist vs Socialist-oriented Market Economies).
-  - Subject: Marxist-Leninist Political Economy (Kinh tế chính trị Mác – Lênin).
-  - Role of this file: Main HTML structure, layout, text content, SVG diagrams, and embedding style.css and script.js.
-  - Sections:
-    1. Preloader & Navigation
-    2. Scene 1: Hero (Intro, custom canvas/svg layout)
-    3. Scene 2: Part I - General Basis (Thesis 1)
-    4. Scene 3: Two Models Comparison (TBCN vs ĐH XHCN panels)
-    5. Scene 4: Video / Perspective (Embedded Youtube player)
-    6. Scene 5: Part II - Core Issue (Thesis 2)
-    7. Scene 6: Four Regulatory Tools (Interaction cards: Land, Tax, Credit, System)
-    8. Scene 7: Conclusion
+  =========================================
+  GHI CHÚ DỰ ÁN (PROJECT OVERVIEW & CONTEXT)
+  =========================================
+  - Tên dự án: Trang trình chiếu tương tác "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội"
+  - Môn học: Kinh tế chính trị Mác – Lênin (Marxist-Leninist Political Economy).
+  - Vai trò của file này: Chứa cấu trúc HTML chính, nội dung văn bản, sơ đồ SVG và các thẻ liên kết CSS (style.css) cùng Javascript (script.js).
+  
+  Cấu trúc các phần (Sections):
+    1. Preloader & Navigation: Màn hình chờ tải trang và thanh điều hướng cố định (Sticky Navigation) với thanh tiến trình tiến độ đọc.
+    2. Scene 1 - Hero: Phần giới thiệu chính, hiệu ứng hạt bụi vàng (Canvas) và các lớp nền Parallax (sao, mặt trăng, dải sáng aurora).
+    3. Scene 2 - Phần I (Cơ sở lý luận): Giới thiệu khái quát về kinh tế thị trường, các quy luật giá trị, cung - cầu và cạnh tranh.
+    4. Scene 3 - Định nghĩa & Đối chiếu:
+       - Định nghĩa chi tiết về KTTT Tư bản chủ nghĩa và KTTT Định hướng XHCN.
+       - Bảng so sánh tương tác (Accordion panels) giữa 2 mô hình (Sở hữu, Mục tiêu, Phân phối, Vai trò Nhà nước, Công bằng).
+    5. Scene 4 - Phóng sự thực tế: Nhúng trình phát video Youtube về thực trạng nhà ở xã hội (NOXH).
+    6. Scene 5 - Phần II (Vấn đề cốt lõi): Sử dụng Bento Grid hiển thị mâu thuẫn cốt lõi giữa lợi nhuận doanh nghiệp và nhu cầu của người nghèo.
+       - Có sơ đồ động mô phỏng dòng vốn thị trường chảy vào phân khúc cao cấp thay vì NOXH khi thiếu sự can thiệp.
+    7. Scene 6 - Bốn công cụ điều tiết: Thiết kế lưới thẻ tương tác 3D (Đất đai, Thuế, Lãi suất, Thể chế) nhằm biến xây dựng NOXH thành cơ hội kinh doanh hợp lý.
+    8. Scene 7 - Kết luận & Cán cân tương tác: Mô phỏng cán cân công lý/kinh tế để người dùng tương tác lựa chọn 3 chế độ:
+       - Thị trường tự do (Tự điều tiết cực đoan) -> Lợi nhuận cao, An sinh bằng 0.
+       - Mệnh lệnh áp đặt -> Triệt tiêu động lực kinh doanh.
+       - Điều tiết vĩ mô -> Hài hòa lợi ích giữa Lợi nhuận và An sinh.
 -->
-<!-- Re-trigger deployment build -->
 <!doctype html>
 <html lang="vi">
 
@@ -31,7 +39,7 @@
 
 <body>
 
-  <!-- PRELOADER -->
+  <!-- PRELOADER: Màn hình chờ khi tải trang. Giúp che đi quá trình tải hình ảnh nền nặng và khởi tạo Canvas. -->
   <div id="preloader">
     <div class="preloader-content">
       <div class="preloader-line">
@@ -41,9 +49,13 @@
     </div>
   </div>
 
+  <!-- THANH TIẾN TRÌNH & NÚT ĐIỀU HƯỚNG NHANH -->
+  <!-- #progress: Thanh chạy dọc đầu trang thể hiện % cuộn trang của người dùng -->
   <div id="progress"></div>
+  <!-- #section-dots: Chứa các dấu chấm nhỏ bên phải màn hình để chuyển nhanh đến các Scene -->
   <div id="section-dots" aria-label="Điều hướng từng phần"></div>
 
+  <!-- NAVIGATION HEADER: Thanh tiêu đề đầu trang. Tự động thu nhỏ và đổi màu khi cuộn trang (nav-scrolled). -->
   <nav>
     <div class="nav-logo">KTTT · NOXH</div>
     <div class="nav-title" id="nav-center-title"></div>
@@ -54,18 +66,22 @@
         </svg></span></div>
   </nav>
 
-  <!-- SCENE 1: HERO -->
+  <!-- SCENE 1: HERO (PHẦN MỞ ĐẦU)
+       - Chứa tiêu đề chính đầy ấn tượng với hiệu ứng chữ phát sáng.
+       - Các thẻ div nền tạo chiều sâu không gian Parallax di chuyển theo chuột.
+       - Thẻ canvas để chạy script vẽ các hạt bụi vàng chuyển động ngẫu nhiên.
+  -->
   <section class="scene" id="scene-hero" data-dot-label="Mở đầu">
 
-    <!-- Background layers -->
-    <div class="stars" aria-hidden="true"></div>
-    <div class="moon" aria-hidden="true"></div>
-    <div id="motes" aria-hidden="true"></div>
-    <div class="atmos" aria-hidden="true"></div>
-    <div class="atmos-2" aria-hidden="true"></div>
+    <!-- Các lớp nền Parallax tạo hiệu ứng 3D chiều sâu không gian -->
+    <div class="stars" aria-hidden="true"></div> <!-- Lớp các vì sao nhấp nháy -->
+    <div class="moon" aria-hidden="true"></div> <!-- Lớp mặt trăng phát sáng -->
+    <div id="motes" aria-hidden="true"></div> <!-- Lớp bụi mờ ảo -->
+    <div class="atmos" aria-hidden="true"></div> <!-- Dải sáng nền 1 -->
+    <div class="atmos-2" aria-hidden="true"></div> <!-- Dải sáng nền 2 -->
     <!-- Parallax aurora -->
-    <div class="hero-aurora" aria-hidden="true"></div>
-    <!-- Particle canvas -->
+    <div class="hero-aurora" aria-hidden="true"></div> <!-- Hiệu ứng hào quang phát sáng -->
+    <!-- Particle canvas: Nơi JavaScript vẽ hiệu ứng bụi vàng chuyển động liên tục -->
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
     <div class="hero-content">
@@ -127,7 +143,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE 2: CƠ SỞ CHUNG -->
+  <!-- SCENE 2: CƠ SỞ CHUNG (PHẦN I - LÝ LUẬN NỀN TẢNG)
+       - Trình bày định nghĩa sơ khởi và nguyên lý cốt lõi của kinh tế thị trường.
+       - Lớp hiệu ứng .reveal giúp các phần tử mờ dần và trượt lên khi cuộn tới nhờ IntersectionObserver.
+  -->
   <section class="scene scene-thesis" id="scene-thesis-1" data-dot-label="Cơ sở lý luận">
     <div class="thesis-number">I</div>
     <div class="thesis-eyebrow reveal">Phần I - Cơ sở chung</div>
@@ -146,7 +165,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE: ĐỊNH NGHĨA -->
+  <!-- SCENE: ĐỊNH NGHĨA HAI MÔ HÌNH KINH TẾ
+       - Sử dụng lưới định nghĩa (definitions-grid) gồm 2 thẻ định nghĩa lớn.
+       - Giúp người xem nắm bắt nhanh bản chất của KTTT Tư bản chủ nghĩa và KTTT Định hướng XHCN trước khi đi vào so sánh.
+  -->
   <section class="scene" id="scene-definitions" data-dot-label="Định nghĩa">
     <div class="definitions-eyebrow reveal">Khái niệm nền tảng</div>
     <h2 class="definitions-title reveal reveal-delay-1" data-glow="Định nghĩa hai mô hình">Định nghĩa hai mô hình</h2>
@@ -175,7 +197,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE 3: HAI MÔ HÌNH -->
+  <!-- SCENE 3: HAI MÔ HÌNH ĐỐI CHIẾU CHI TIẾT (BẢNG TƯƠNG TÁC ACCORDION)
+       - Thiết kế chia đôi màn hình (views-split) với ký tự "VS" ở giữa.
+       - Mỗi bên là một Accordion Panel (.view-panel) cho phép nhấp chuột để mở rộng (.view-details) hiển thị các tiêu chí so sánh.
+  -->
   <section class="scene" id="scene-views" data-dot-label="Hai mô hình">
     <div class="views-eyebrow reveal">Định nghĩa đối chiếu</div>
     <h2 class="views-title reveal reveal-delay-1" data-glow="Hai mô hình, hai điểm xuất phát">Hai mô hình, hai điểm xuất
@@ -226,7 +251,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE: VIDEO -->
+  <!-- SCENE: TRÌNH CHIẾU VIDEO THỰC TẾ
+       - Nhúng video Youtube ẩn các thông tin quảng cáo liên quan qua tham số của youtube-nocookie.
+       - Hỗ trợ nút dự phòng (yt-fallback-btn) nếu trình duyệt chặn không cho hiển thị iframe.
+  -->
   <section class="scene" id="scene-video" data-dot-label="Phóng sự thực tế">
     <div class="video-eyebrow reveal">Thước phim ngắn</div>
     <h2 class="video-title reveal reveal-delay-1" data-glow="Góc nhìn thực tế về câu chuyện nhà ở xã hội">Góc nhìn thực
@@ -259,7 +287,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE 4: CASE STUDY - BENTO GRID REDESIGN -->
+  <!-- SCENE 4: PHẦN II - VẤN ĐỀ CỐT LÕI (BENTO GRID & SƠ ĐỒ DÒNG VỐN)
+       - Thiết kế kiểu lưới Bento hiện đại (.bento-grid) để trình bày nội dung.
+       - Trực quan hóa mâu thuẫn kinh tế: Dòng vốn tự do bị tắc khi chảy vào Nhà ở xã hội vì biên lợi nhuận thấp, trong khi dễ dàng chảy vào phân khúc cao cấp.
+  -->
   <section class="scene scene-thesis case-study-scene case-study-pro" id="scene-thesis-2"
     data-dot-label="Vấn đề cốt lõi">
     <div class="thesis-number">II</div>
@@ -381,7 +412,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE 5: BỐN CÔNG CỤ -->
+  <!-- SCENE 5: BỐN CÔNG CỤ ĐIỀU TIẾT VĨ MÔ CỦA NHÀ NƯỚC
+       - Thiết kế 4 thẻ tương tác (.analysis-card). Khi di chuyển chuột vào, thẻ sẽ nghiêng 3D (3D tilt effect).
+       - Khi nhấp chuột, thẻ mở rộng và thông tin chi tiết được hiển thị ở bảng mô tả phía trên (.analysis-detail-pane) trên giao diện desktop/tablet hoặc mở rộng thẻ trực tiếp trên mobile.
+  -->
   <section class="scene" id="scene-analysis" data-dot-label="Bốn công cụ">
     <div class="analysis-header">
       <div class="analysis-eyebrow">Bốn công cụ điều tiết</div>
@@ -490,7 +524,10 @@
         <polygon points="5,0 10,5 5,10 0,5" fill="rgba(232,212,168,0.9)" />
       </svg></span></div>
 
-  <!-- SCENE 6: KẾT LUẬN -->
+  <!-- SCENE 6: PHẦN KẾT LUẬN & TIỆN ÍCH CÁN CÂN TƯƠNG TÁC (INTERACTIVE BALANCE SCALE)
+       - Cột trái: Tóm tắt bài học chính từ môn học Kinh tế chính trị.
+       - Cột phải: Tiện ích cán cân tương tác mô phỏng 3 trạng thái điều tiết: tự do, áp đặt mệnh lệnh, và điều tiết vĩ mô. Giúp người dùng trực quan hóa được sự thay đổi của cán cân Lợi nhuận vs An sinh.
+  -->
   <section class="scene" id="scene-conclusion" data-dot-label="Kết luận">
     <div class="conclusion-glow"></div>
     <div class="conclusion-grid-wrapper">

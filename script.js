@@ -1,22 +1,33 @@
 /**
- * [AI CONTEXT NOTE]
- * - Project: Interactive presentation on "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội".
- * - Role of this file: Interactive logic, animations, and UI state management.
- * - Key features implemented:
- *   - Scroll progress, dynamic section header text, and indicator dots navigation.
- *   - Mouse parallax (hero background aurora, moon, stars) and Canvas gold dust animation.
- *   - Interaction panels for model comparison (accordion expand/collapse).
- *   - IntersectionObserver triggers for scroll reveal animations.
- *   - 3D hover/tilt effects on the four tool cards in Scene 6.
- *   - Custom audio commentary controller (Text-to-Speech playback logic, sync, progress bars).
- *   - Preloader page fadeout.
+ * ========================================================
+ * LOGIC TƯƠNG TÁC CHÍNH (MAIN JAVASCRIPT LOGIC)
+ * ========================================================
+ * - Dự án: Trang trình chiếu tương tác "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội".
+ * - Vai trò của file này: Điều khiển tất cả các hiệu ứng chuyển động, sự kiện cuộn trang,
+ *   tương tác nhấp chuột mở thẻ, hiệu ứng Parallax, Canvas và các bộ sinh hạt bụi sáng.
+ * 
+ * Các tính năng chính được lập trình:
+ *   1. Xử lý thanh tiến trình cuộn trang và cập nhật tên tiêu đề phần hiện hành trên Navbar.
+ *   2. Parallax chuột (nền mờ, mặt trăng, sao dịch chuyển ngược chiều) và Canvas hạt bụi vàng bay.
+ *   3. Accordion panel đối chiếu 2 mô hình (Tư bản vs Xã hội) và tự động đồng bộ chiều cao dòng.
+ *   4. IntersectionObserver kích hoạt hiệu ứng hiển thị dần (reveal) khi cuộn chuột tới nơi.
+ *   5. Lưới Bento Grid & hoạt ảnh coin chạy động mô phỏng dòng vốn bị tắc ở Nhà ở xã hội.
+ *   6. Carousel xoay vòng 3D và tilt 3D hiệu ứng thẻ Bốn công cụ điều tiết vĩ mô.
+ *   7. Thanh điều hướng dấu chấm nhanh ở biên phải & phím mũi tên lên/xuống để chuyển phần.
+ *   8. Widget Cán cân tương tác ở phần kết luận (Thị trường tự do vs Mệnh lệnh vs Điều tiết).
+ *   9. Màn hình preloader tự chạy % và tắt mịn màng khi tải xong trang.
+ *   10. Hiệu ứng hạt sáng bay xung quanh chữ "Bàn tay hữu hình" và "Bàn tay vô hình".
  */
 (function () {
+  // Bộ hàm rút gọn truy vấn DOM (viết theo kiểu jQuery tối giản)
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+  
+  // Kiểm tra nếu người dùng cài đặt giảm hiệu ứng chuyển động trong hệ điều hành (Accessibility)
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const navCenterTitle = $('#nav-center-title');
+  // Danh sách tiêu đề của các phần hiển thị ở trung tâm Navbar khi cuộn qua
   const navTitles = {
     'scene-hero': '',
     'scene-thesis-1': 'Phần I - Cơ sở chung',
@@ -58,17 +69,19 @@
     document.body.classList.remove('keyboard-navigation');
   });
 
-  // ---------- Progress bar & Navbar scroll class ----------
+  // ---------- THANH TIẾN TRÌNH & ĐỔI TRẠNG THÁI NAVBAR KHI CUỘN ----------
   const progress = $('#progress');
   const navbarEl = $('nav');
   const navGoldDivider = $('.nav-gold-divider');
 
   function onScroll() {
+    // Tính toán % cuộn trang hiện tại
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const p = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
     if (progress) progress.style.width = (p * 100) + '%';
 
+    // Thêm hoặc xóa class 'nav-scrolled' khi cuộn qua mốc 50px (để áp dụng làm mờ nền kính và đổ bóng)
     if (navbarEl) {
       if (scrollTop > 50) {
         navbarEl.classList.add('nav-scrolled');
@@ -115,7 +128,8 @@
 
 
 
-  // ---------- Floating motes ----------
+  // ---------- BỤI SÁNG BAY NỀN (FLOATING MOTES) ----------
+  // Tạo ra 18 hạt bụi sáng bay lơ lửng ngẫu nhiên ở phần Hero
   const motesContainer = $('#motes');
   if (motesContainer && !prefersReducedMotion) {
     for (let i = 0; i < 18; i++) {
@@ -130,20 +144,20 @@
     }
   }
 
-  // ---------- Hero special effects ----------
+  // ---------- HIỆU ỨNG PARALLAX THEO CHUỘT TRONG HERO SECTION ----------
   const heroSection = $('#scene-hero');
   const heroAurora = $('.hero-aurora');
   const heroMoon = $('.moon');
   const heroStars = $('.stars');
 
-  // Mouse parallax: aurora + moon/stars shift
+  // Khi người dùng di chuyển chuột, các lớp sao và trăng sẽ dịch chuyển nhẹ trái/phải ngược chiều để tạo cảm giác 3D
   if (heroSection && !prefersReducedMotion) {
     heroSection.addEventListener('mousemove', function (e) {
       const rect = heroSection.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / rect.width;   // -0.5 → 0.5
-      const dy = (e.clientY - cy) / rect.height;  // -0.5 → 0.5
+      const dx = (e.clientX - cx) / rect.width;   // Tính biên độ lệch ngang chuột từ -0.5 đến 0.5
+      const dy = (e.clientY - cy) / rect.height;  // Tính biên độ lệch dọc chuột từ -0.5 đến 0.5
 
       // Aurora follows cursor
       if (heroAurora) {
@@ -169,13 +183,14 @@
     });
   }
 
-  // Canvas: floating gold dust particles
+  // VỀ CÁC HẠT BỤI VÀNG BAY LÊN BẰNG CANVAS (HERO CANVAS)
   (function () {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas || prefersReducedMotion) return;
     const ctx = canvas.getContext('2d');
     let W, H, particles = [], raf;
 
+    // Cập nhật lại kích thước Canvas theo kích thước thực của phần Hero
     function resize() {
       const hero = document.getElementById('scene-hero');
       W = canvas.width = hero ? hero.offsetWidth : window.innerWidth;
@@ -235,26 +250,29 @@
     heroObs.observe(document.getElementById('scene-hero'));
   })();
 
-  // ---------- Reveal on scroll ----------
+  // ---------- HIỆU ỨNG HIỂN THỊ DẦN KHI CUỘN ĐẾN (REVEAL ON SCROLL) ----------
+  // Sử dụng IntersectionObserver để phát hiện khi các phần tử có class .reveal xuất hiện trong viewport
   const revealEls = $$('.reveal');
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          entry.target.classList.add('visible'); // Thêm class visible để kích hoạt CSS Transition
+          observer.unobserve(entry.target);     // Ngừng theo dõi phần tử này sau khi đã hiển thị xong
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
     revealEls.forEach(function (el) { observer.observe(el); });
   } else {
+    // Dự phòng cho trình duyệt cũ không hỗ trợ IntersectionObserver
     revealEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  // ---------- View panels (Hai mô hình) - độc lập ----------
+  // ---------- TRÌNH ĐIỀU KHIỂN ĐỐI CHIẾU HAI MÔ HÌNH (SCENE 3 ACCORDION) ----------
   const viewsSection = $('#scene-views');
   const viewPanels = $$('.view-panel');
 
+  // Cập nhật lại màu nền và chủ đề (Gold, Brick, Sage hoặc hỗn hợp) khi mở một/hai thẻ
   function updateViewsTheme() {
     const opened = viewPanels.map(function (p, i) { return p.classList.contains('expanded') ? i : -1; }).filter(function (i) { return i >= 0; });
     viewsSection.classList.remove('has-active', 'theme-1', 'theme-2', 'theme-both');
@@ -337,7 +355,7 @@
     });
   });
 
-  // ---------- Analysis cards (4 công cụ) ----------
+  // ---------- TRÌNH ĐIỀU KHIỂN BỐN CÔNG CỤ ĐIỀU TIẾT (SCENE 5 CAROUSEL & CARDS) ----------
   const analysisSection = $('#scene-analysis');
   const analysisContainer = $('.analysis-container');
   const analysisGrid = $('.analysis-grid');
@@ -345,6 +363,7 @@
   const detailPane = $('.analysis-detail-pane');
   let fadeTimeout = null;
 
+  // Đưa lưới thẻ 4 công cụ về trạng thái ban đầu khi đóng hoặc thu nhỏ
   function resetAnalysis() {
     analysisContainer.classList.remove('has-active');
     analysisSection.classList.remove('theme-1', 'theme-2', 'theme-3', 'theme-4', 'has-active-card');
@@ -584,7 +603,7 @@
       scrollToSection(1);
     });
   }
-  // ---------- Conclusion Balance Scale Widget ----------
+  // ---------- TIỆN ÍCH CÁN CÂN TƯƠNG TÁC (SCENE 7 BALANCE SCALE WIDGET) ----------
   const balanceWidget = $('.conclusion-balance-widget');
   if (balanceWidget) {
     const btns = $$('.balance-btn', balanceWidget);
@@ -733,7 +752,7 @@ if (document.readyState === 'loading') {
   initPreloader();
 }
 
-// ----- SCROLL DRIVEN CONCLUSION -----
+// ----- HIỆU ỨNG HIỂN THỊ CHỮ DẦN THEO CUỘN CHUỘT (SCROLL DRIVEN CONCLUSION) -----
 function initConclusion() {
   const conclusionSection = document.getElementById('scene-conclusion');
   const conclusionText = document.getElementById('conclusion-text');
@@ -792,7 +811,7 @@ if (document.readyState === 'loading') {
 }
 
 // ======================================================
-// ✨ HẠT VÀNG BAY QUANH "Bàn tay hữu hình"
+// ✨ SINH HẠT BỤI VÀNG CHẠY QUANH CHỮ "Bàn tay hữu hình"
 // ======================================================
 (function () {
   const kientaoEl = document.querySelector('.hero-kientao');
@@ -836,7 +855,7 @@ if (document.readyState === 'loading') {
 })();
 
 // ======================================================
-// 🌫️ HẠT BẠC BAY QUANH "Bàn tay vô hình"
+// 🌫️ SINH HẠT BỤI BẠC MỜ ẢO QUANH CHỮ "Bàn tay vô hình"
 // ======================================================
 (function () {
   const vohinhEl = document.querySelector('.hero-vohinh');

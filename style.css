@@ -1,26 +1,42 @@
 /**
- * [AI CONTEXT NOTE]
- * - Project: Interactive presentation on "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội".
- * - Role of this file: Main stylesheet containing layout, design system (colors, typography), responsive styles, and animations.
- * - Key style sections:
- *   - Custom CSS variables for theme palette (gold, deep dark, sage green, brick red).
- *   - Custom preloader, progress indicators, and fixed layout navigation.
- *   - Parallax, Canvas background positioning, and glow/aurora effects.
- *   - Interactive card layouts, transitions, custom accordion states, and 3D perspective transforms.
- *   - Responsive media queries (@media for desktop, tablet, mobile).
+ * ========================================================
+ * HỆ THỐNG GIAO DIỆN & STYLE CHÍNH (MAIN CSS STYLESHEET)
+ * ========================================================
+ * - Dự án: Trang trình chiếu tương tác "Bàn Tay Vô Hình và Bàn Tay Nhà Nước - Câu Chuyện Nhà Ở Xã Hội".
+ * - Vai trò của file này: Quản lý toàn bộ giao diện, hệ thống lưới hiển thị, màu sắc, phông chữ,
+ *   hiệu ứng chuyển cảnh (transitions), hiệu ứng hạt 3D và giao diện tương thích thiết bị (Responsive).
+ * 
+ * Các phần chính trong CSS:
+ *   - Hệ thống biến CSS (Design Tokens): màu sắc chủ đạo (vàng gold, đỏ gạch, xanh sage, nền tối).
+ *   - CSS Reset & Cấu trúc chung cho các Section (.scene).
+ *   - Trình điều khiển thanh cuộn tiến độ (#progress) và thanh menu (.nav).
+ *   - Hiệu ứng Parallax cho Scene Hero (sao nhấp nháy, mặt trăng trôi, bụi vàng).
+ *   - Lưới Bento Grid cho phân tích dòng vốn bị tắc nghẽn ở Nhà ở xã hội.
+ *   - Khối thiết kế thẻ tương tác 3D với hiệu ứng Hover/Tilt.
+ *   - Widget Cán cân tương tác ở phần kết luận.
  */
+
 :root {
-  --deep: #15110c;
-  --deep2: #0c0a07;
-  --fog: #f2ece1;
-  --mist: #c8bea9;
-  --gold: #c9a463;
-  --gold-bright: #e8d4a8;
+  /* Tông màu nền tối chủ đạo */
+  --deep: #15110c;       /* Màu nâu đen ấm */
+  --deep2: #0c0a07;      /* Màu tối đậm hơn cho độ tương phản */
+  
+  /* Tông màu chữ và phụ trợ */
+  --fog: #f2ece1;        /* Chữ trắng ngà mềm mắt */
+  --mist: #c8bea9;       /* Chữ xám mờ phụ phụ */
+  
+  /* Tông màu vàng ánh kim (Gold) đại diện cho sự sang trọng, tri thức và điều tiết vĩ mô */
+  --gold: #c9a463;       /* Vàng gold trung tính */
+  --gold-bright: #e8d4a8;/* Vàng gold sáng phát quang */
+  --line: rgba(201, 164, 99, 0.16); /* Đường viền gold mờ */
+  
+  /* Tông màu đỏ gạch (Brick) - Đại diện cho Kinh tế Tư bản chủ nghĩa và sự đứt gãy */
   --brick: #b56a4c;
   --brick-soft: rgba(181, 106, 76, 0.14);
+  
+  /* Tông màu xanh lá xám (Sage) - Đại diện cho Kinh tế Định hướng XHCN và sự an sinh bền vững */
   --sage: #8ca17e;
   --sage-soft: rgba(140, 161, 126, 0.14);
-  --line: rgba(201, 164, 99, 0.16);
 }
 
 *,
