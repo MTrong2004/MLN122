@@ -2052,7 +2052,7 @@ nav.scene-analysis .gold-divider-gem svg polygon {
   flex-direction: column;
   gap: 0.9rem;
   text-align: left;
-  min-height: 235px;
+  min-height: 365px;
   transition: opacity 0.3s ease, transform 0.3s ease;
   background: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -2112,6 +2112,7 @@ nav.scene-analysis .gold-divider-gem svg polygon {
   font-size: 0.85rem;
   transition: color 0.3s ease;
   letter-spacing: 0.02em;
+  text-align: right;
 }
 
 .metric-val.val-high {
@@ -3771,4 +3772,8 @@ html {
   color: var(--gold-bright);
   border-color: var(--gold-bright);
   text-shadow: 0 0 8px rgba(232, 212, 168, 0.35);
+}
+
+border-color: var(--gold-bright);
+text-shadow: 0 0 8px rgba(232, 212, 168, 0.35);
 }

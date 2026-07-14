@@ -629,7 +629,7 @@
         profit: 'Cực kỳ cao',
         profitClass: 'val-high',
         profitPct: '95%',
-        welfare: 'Bằng không',
+        welfare: 'Bằng không<br>0',
         welfareClass: 'val-low',
         welfarePct: '5%'
       },
@@ -688,11 +688,11 @@
           if (title) title.textContent = state.title;
           if (desc) desc.textContent = state.desc;
           if (profitVal) {
-            profitVal.textContent = state.profit;
+            profitVal.innerHTML = state.profit;
             profitVal.className = 'metric-val val-profit ' + state.profitClass;
           }
           if (welfareVal) {
-            welfareVal.textContent = state.welfare;
+            welfareVal.innerHTML = state.welfare;
             welfareVal.className = 'metric-val val-welfare ' + state.welfareClass;
           }
           const profitBar = $('.fill-profit', balanceWidget);
